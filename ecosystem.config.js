@@ -5,7 +5,10 @@ module.exports = {
       script: 'dist/main.js',
       instances: 1,
       autorestart: true,
-      env: {
+      env_development: {
+        NODE_ENV: 'development',
+      },
+      env_production: {
         NODE_ENV: 'production',
       },
     },
