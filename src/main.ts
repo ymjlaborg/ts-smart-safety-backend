@@ -7,6 +7,12 @@ async function bootstrap() {
   const globalPrefix: string = 'api/v1';
   app.setGlobalPrefix(globalPrefix);
 
+  // CORS
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
+
   await app.listen(3000);
 }
 bootstrap();
