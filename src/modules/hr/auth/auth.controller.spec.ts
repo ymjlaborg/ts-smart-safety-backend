@@ -15,10 +15,9 @@ describe('worker/AuthController', () => {
     controller = module.get<AuthController>(AuthController);
   });
 
-  it('signin 호출 시 body에 데이터를 넣지 않으면 오류가 발생한다.', async () => {
+  it('signin 호출 시 아이디 또는 비밀번호를 입력하지 않으면 status 프로퍼티가 401이 발생된다.', async () => {
     const signinDto: SigninDto = new SigninDto();
-    signinDto.officeID = 2;
-    signinDto.workerPw = '1q2w3e4r!';
+    signinDto.userPw = '1q2w3e4r!';
 
     const result = await controller.signin(signinDto);
     expect(result).toHaveProperty('status');

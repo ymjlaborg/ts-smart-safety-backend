@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { SigninDto } from './dto/signin.dto';
-import { ResultDto } from 'src/common/dto';
+import { ResultDto, UserDto } from 'src/common/dto';
 
 @Injectable()
 export class AuthService {
-  async signin(signinDto: SigninDto): Promise<ResultDto<any>> {
+  private readonly logger: Logger = new Logger(AuthService.name);
+
+  async signin(signinDto: SigninDto): Promise<ResultDto<UserDto>> {
+    this.logger.log(signinDto.userId);
     return null;
   }
 
