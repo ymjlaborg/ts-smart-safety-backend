@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Yn } from '../enum';
 import { Worker } from './worker.entity';
+import { Course } from './course.entity';
 
 @Entity({
   name: 'TBLuser',
@@ -65,6 +66,9 @@ export class User {
     comment: '관리자 여부',
   })
   isAdmin: Yn;
+
+  @OneToMany(() => Course, (course) => course.user)
+  courses: Course[];
 
   @OneToMany(() => Worker, (worker) => worker.user)
   workers: Worker[];

@@ -3,12 +3,18 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { WorkerStatus } from '../enum';
+import { Course } from './course.entity';
+import { WorkerAlarmMessage } from './worker-alarm-message.entity';
 
 @Entity({
   name: 'TBLworker',
@@ -105,5 +111,29 @@ export class Worker {
   expireAt?: Date;
 
   @ManyToOne(() => User, (user) => user.workers)
+  @JoinColumn({
+    name: 'OfficeID',
+    referencedColumnName: 'ID',
+  })
   user: User;
+
+  @ManyToMany(() => Course, (course) => course.workers)
+  @JoinTable({
+    name: 'TBLworkerCourse',
+    joinColumn: {
+      name: 'WorkerID',
+      referencedColumnName: 'ID',
+    },
+    inverseJoinColumn: {
+      name: 'CourseID',
+      referencedColumnName: 'ID',
+    },
+  })
+  courses: Course[];
+
+  @OneToMany(
+    () => WorkerAlarmMessage,
+    (workerAlarmMessage) => workerAlarmMessage.worker,
+  )
+  workerAlarmMessages: WorkerAlarmMessage[];
 }

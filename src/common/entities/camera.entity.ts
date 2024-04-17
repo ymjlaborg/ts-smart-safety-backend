@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Node } from './node.entity';
 import { Yn } from '../enum';
 
@@ -34,5 +34,9 @@ export class Camera {
   useWaitingRoom: Yn;
 
   @ManyToOne(() => Node, (node) => node.cameras)
+  @JoinColumn({
+    name: 'NodeID',
+    referencedColumnName: 'NodeID',
+  })
   node: Node;
 }

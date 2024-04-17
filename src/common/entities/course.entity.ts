@@ -2,11 +2,17 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { NodeCourse } from './node-course.entity';
+import { Worker } from './worker.entity';
+import { User } from './user.entity';
+import { AlertHistory } from './alert-history.entity';
 
 @Entity({
   name: 'TBLcourse',
@@ -51,6 +57,19 @@ export class Course {
   })
   updatedAt?: Date;
 
+  @ManyToOne(() => User, (user) => user.courses)
+  @JoinColumn({
+    name: 'OfficeID',
+    referencedColumnName: 'ID',
+  })
+  user: User;
+
   @OneToMany(() => NodeCourse, (nodeCourse) => nodeCourse.node)
   nodeCourses: NodeCourse[];
+
+  @ManyToMany(() => Worker, (worker) => worker.courses)
+  workers: Worker[];
+
+  @OneToMany(() => AlertHistory, (alertHistory) => alertHistory.course)
+  alertHistories: AlertHistory[];
 }

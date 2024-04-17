@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Course } from './course.entity';
 import { Node } from './node.entity';
 
@@ -31,8 +31,16 @@ export class NodeCourse {
   entranceType: number;
 
   @ManyToOne(() => Course, (course) => course.nodeCourses)
+  @JoinColumn({
+    name: 'CourseID',
+    referencedColumnName: 'ID',
+  })
   course: Course;
 
   @ManyToOne(() => Node, (node) => node.nodeCourses)
+  @JoinColumn({
+    name: 'NodeID',
+    referencedColumnName: 'ID',
+  })
   node: Node;
 }
