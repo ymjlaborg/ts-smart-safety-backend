@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SigninDto } from './dto/signin.dto';
-import { ErrorResultDto, ResultDto, UserDto } from 'src/common/dto';
+import { ErrorResultDto, ResultDto } from '@app/dto';
 
 @Controller('worker/auth')
 export class AuthController {
@@ -21,7 +21,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async signin(
     @Body() signinDto: SigninDto,
-  ): Promise<ResultDto<UserDto> | ErrorResultDto> {
+  ): Promise<ResultDto<any> | ErrorResultDto> {
     return await this.authService.signin(signinDto);
   }
 

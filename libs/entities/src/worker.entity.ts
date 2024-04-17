@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
-import { WorkerStatus } from '../enum';
+import { WorkerStatus } from '@app/enum';
 import { Course } from './course.entity';
 import { WorkerAlarmMessage } from './worker-alarm-message.entity';
 

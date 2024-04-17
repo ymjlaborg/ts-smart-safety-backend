@@ -5,9 +5,10 @@ import { HookModule } from 'src/modules/hook/hook.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@app/config';
+import { DatabaseModule } from '@app/database';
 
 @Module({
-  imports: [ConfigModule, WorkerModule, HookModule],
+  imports: [ConfigModule, DatabaseModule, WorkerModule, HookModule],
   controllers: [AppController],
   providers: [AppService],
 })

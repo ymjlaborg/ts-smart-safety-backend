@@ -1,1 +1,3 @@
 export * from './swagger-option.dto';
+export * from './result.dto';
+export * from './error-result.dto';

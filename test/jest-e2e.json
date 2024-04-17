@@ -18,6 +18,8 @@
     "@app/dto/(.*)": "<rootDir>/../libs/dto/src/$1",
     "@app/dto": "<rootDir>/../libs/dto/src",
     "@app/enum/(.*)": "<rootDir>/../libs/enum/src/$1",
-    "@app/enum": "<rootDir>/../libs/enum/src"
+    "@app/enum": "<rootDir>/../libs/enum/src",
+    "@app/entities/(.*)": "<rootDir>/../libs/entities/src/$1",
+    "@app/entities": "<rootDir>/../libs/entities/src"
   }
 }

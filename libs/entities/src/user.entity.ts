@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Yn } from '../enum';
+import { Yn } from '@app/enum';
 import { Worker } from './worker.entity';
 import { Course } from './course.entity';
 

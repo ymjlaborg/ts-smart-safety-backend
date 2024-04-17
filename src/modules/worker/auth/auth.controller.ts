@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SigninDto } from './dto/signin.dto';
-import { ErrorResultDto, ResultDto } from 'src/common/dto';
+import { ErrorResultDto, ResultDto } from '@app/dto';
 
 @Controller('worker/auth')
 export class AuthController {

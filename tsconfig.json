@@ -41,6 +41,12 @@
       ],
       "@app/enum/*": [
         "libs/enum/src/*"
+      ],
+      "@app/entities": [
+        "libs/entities/src"
+      ],
+      "@app/entities/*": [
+        "libs/entities/src/*"
       ]
     }
   }

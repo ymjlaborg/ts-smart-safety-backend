@@ -6,8 +6,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { SwaggerConfig } from '@app/config';
+import { initializeTransactionalContext } from 'typeorm-transactional';
 
 async function bootstrap() {
+  // Transaction Decorator 적용
+  initializeTransactionalContext();
+
   const app = await NestFactory.create(AppModule);
 
   const globalPrefix: string = 'api/v1';

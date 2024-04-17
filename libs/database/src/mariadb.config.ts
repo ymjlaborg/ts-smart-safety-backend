@@ -20,7 +20,7 @@ export class MariaDBConfig implements TypeOrmOptionsFactory {
       synchronize: false,
       dropSchema: false,
       logging: process.env.ENV !== 'production',
-      entities: [],
+      autoLoadEntities: true,
     };
   }
 }

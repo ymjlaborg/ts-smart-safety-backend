@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Node } from './node.entity';
-import { Yn } from '../enum';
+import { Yn } from '@app/enum';
 
 @Entity({
   name: 'TBLcamera',

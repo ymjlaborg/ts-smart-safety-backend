@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { AlertLevel, AlertType, EntranceType } from '../enum';
+import { AlertLevel, AlertType, EntranceType } from '@app/enum';
 import { Course } from './course.entity';
 import { WorkerAlarmMessage } from './worker-alarm-message.entity';
 

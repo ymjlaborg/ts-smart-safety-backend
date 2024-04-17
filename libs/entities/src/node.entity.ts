@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { NodeType, NodeValue } from '../enum';
+import { NodeType, NodeValue } from '@app/enum';
 import { Camera } from './camera.entity';
 import { NodeCourse } from './node-course.entity';
 

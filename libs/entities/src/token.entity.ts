@@ -4,7 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TokenServiceName, TokenType } from '../enum';
+import { TokenServiceName, TokenType } from '@app/enum';
 
 @Entity({
   name: 'TBLtoken',
