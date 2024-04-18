@@ -10,16 +10,12 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { Strategy } from 'passport-custom';
 import * as jwt from 'jsonwebtoken';
-import { TokenService } from 'src/apis/Token/token.service';
 
 @Injectable()
 export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
   private readonly logger: Logger = new Logger(JwtAccessStrategy.name);
 
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly tokenService: TokenService,
-  ) {
+  constructor(private readonly configService: ConfigService) {
     super();
   }
 
@@ -33,6 +29,7 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
       const accessToken = req.headers['authorization']?.slice(7);
 
       if (!accessToken) {
+        console.log('ASDAD');
         throw new BadRequestException('');
       }
 

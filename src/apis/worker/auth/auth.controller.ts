@@ -80,7 +80,10 @@ export class AuthController {
     @Req() req: Request,
     @Body() { deviceToken }: UpdateDeviceToken,
   ) {
-    const { id } = req.user as { id: number };
+    const id: number = req.user as number;
+
+    console.log(id, deviceToken);
+
     return await this.authService.deviceToken(id, deviceToken);
   }
 }

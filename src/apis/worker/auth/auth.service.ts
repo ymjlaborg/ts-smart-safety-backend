@@ -10,7 +10,7 @@ import { CustomException } from '@app/common';
 import { TokenService } from 'src/apis/Token/token.service';
 import { TokenServiceName } from '@app/enum';
 import { TokenDto } from '@app/dto/token';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class AuthService {
@@ -92,7 +92,18 @@ export class AuthService {
    * @param deviceToken
    */
   async deviceToken(id: number, deviceToken: string) {
-    const expireAt: Date = dayjs().add(3, 'month').toDate();
+    const existsDeviceToken =
+      await this.workerRepository.existsByDeviceToken(deviceToken);
+
+    if (existsDeviceToken) {
+      throw new CustomException(
+        'DEVICE_TOKEN_DUPLICATED',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const expireAt: Date = dayjs(new Date()).add(3, 'month').toDate();
+
     await this.workerRepository.updateDeviceToken(id, deviceToken, expireAt);
 
     return {

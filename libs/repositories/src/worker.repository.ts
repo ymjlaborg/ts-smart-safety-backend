@@ -22,6 +22,18 @@ export class WorkerRepository extends Repository<WorkerEntity> {
   }
 
   /**
+   * 동일한 디바이스 토큰이 존재하는지 확인
+   *
+   * @param deviceToken
+   * @returns
+   */
+  async existsByDeviceToken(deviceToken: string): Promise<boolean> {
+    return await this.existsBy({
+      deviceToken,
+    });
+  }
+
+  /**
    * 검사소 아이디와 작업자 아이디로 정보를 가져온다.
    *
    * @param officeID
