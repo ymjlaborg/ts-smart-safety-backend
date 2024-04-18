@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpStatus,
   Put,
+  UseFilters,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -15,7 +16,7 @@ import { HttpExceptionFilter } from '@app/filters';
 @ApiTags('작업자 알림앱')
 @Controller('worker')
 @UseInterceptors(TransformInterceptor)
-@UseInterceptors(HttpExceptionFilter)
+@UseFilters(HttpExceptionFilter)
 export class CommonController {
   constructor(private readonly commonService: CommonService) {}
 

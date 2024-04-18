@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { SwaggerConfig } from '@app/config';
 import { initializeTransactionalContext } from 'typeorm-transactional';
+import { HttpExceptionFilter } from '@app/filters';
 
 async function bootstrap() {
   // Transaction Decorator 적용
@@ -23,7 +24,7 @@ async function bootstrap() {
     }),
   );
 
-  // app.useGlobalFilters(new AllExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   // CORS

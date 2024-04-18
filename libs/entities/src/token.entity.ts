@@ -28,14 +28,14 @@ export class TokenEntity {
   serviceName: TokenServiceName;
 
   @Column({
-    name: 'TargetName',
+    name: 'TargetID',
     type: 'int',
     comment: '대상 구분 아이디',
   })
   targetID: number;
 
   @Column({
-    name: 'TargetType',
+    name: 'TokenType',
     type: 'tinyint',
     enum: TokenType,
     comment: '토큰 타입',

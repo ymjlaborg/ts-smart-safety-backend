@@ -31,9 +31,10 @@ export class WorkerRepository extends Repository<WorkerEntity> {
   async findByWorkerIDAndOfficeID(
     officeID: number,
     workerID: string,
-  ): Promise<any> {
+  ): Promise<WorkerEntity> {
     const query = this.createQueryBuilder('worker')
       .select([
+        'worker.id',
         'worker.workerID',
         'worker.workerPw',
         'worker.workerName',

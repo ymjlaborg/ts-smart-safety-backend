@@ -12,6 +12,7 @@ import {
 import { WorkerStatus } from '@app/enum';
 import { OfficeEntity } from './office.entity';
 import { CourseEntity } from './course.entity';
+import { TokenDto } from '@app/dto/token';
 
 @Entity({
   name: 'TBLworker',
@@ -129,4 +130,6 @@ export class WorkerEntity {
     },
   })
   courses: CourseEntity[];
+
+  token: TokenDto;
 }

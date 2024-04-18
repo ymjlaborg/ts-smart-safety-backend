@@ -1,5 +1,5 @@
 import { TokenEntity } from '@app/entities';
-import { TokenServiceName } from '@app/enum';
+import { TokenServiceName, TokenType } from '@app/enum';
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 
@@ -35,8 +35,26 @@ export class TokenRepository extends Repository<TokenEntity> {
   async findByTarget(
     serviceName: TokenServiceName,
     targetID: number,
+    tokenType: TokenType,
   ): Promise<TokenEntity> {
     return await this.findOneBy({
+      serviceName,
+      targetID,
+      tokenType,
+    });
+  }
+
+  /**
+   *
+   * @param serviceName
+   * @param targetID
+   * @returns
+   */
+  async countByTarget(
+    serviceName: TokenServiceName,
+    targetID: number,
+  ): Promise<number> {
+    return await this.countBy({
       serviceName,
       targetID,
     });
@@ -45,7 +63,9 @@ export class TokenRepository extends Repository<TokenEntity> {
   /**
    * 토큰을 등록한다.
    */
-  async createToken() {}
+  async createToken(token: TokenEntity) {
+    await this.create(token);
+  }
 
   /**
    * 해당하는 토큰 아이디를 삭제한다.

@@ -6,16 +6,19 @@ import {
   Logger,
   Post,
   Put,
+  UseFilters,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SigninDto } from '@app/dto';
 import { ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@app/interceptors';
+import { HttpExceptionFilter } from '@app/filters';
 
 @ApiTags('작업자 알림앱')
 @Controller('worker/auth')
 @UseInterceptors(TransformInterceptor)
+@UseFilters(HttpExceptionFilter)
 export class AuthController {
   private readonly logger: Logger = new Logger(AuthController.name);
 
