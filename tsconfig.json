@@ -47,6 +47,12 @@
       ],
       "@app/entities/*": [
         "libs/entities/src/*"
+      ],
+      "@app/repositories": [
+        "libs/repositories/src"
+      ],
+      "@app/repositories/*": [
+        "libs/repositories/src/*"
       ]
     }
   }

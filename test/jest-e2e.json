@@ -20,6 +20,8 @@
     "@app/enum/(.*)": "<rootDir>/../libs/enum/src/$1",
     "@app/enum": "<rootDir>/../libs/enum/src",
     "@app/entities/(.*)": "<rootDir>/../libs/entities/src/$1",
-    "@app/entities": "<rootDir>/../libs/entities/src"
+    "@app/entities": "<rootDir>/../libs/entities/src",
+    "@app/repositories/(.*)": "<rootDir>/../libs/repositories/src/$1",
+    "@app/repositories": "<rootDir>/../libs/repositories/src"
   }
 }

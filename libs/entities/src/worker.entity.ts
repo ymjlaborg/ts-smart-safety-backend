@@ -1,26 +1,20 @@
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { OfficeEntity } from './office.entity';
 import { WorkerStatus } from '@app/enum';
-import { Course } from './course.entity';
-import { WorkerAlarmMessage } from './worker-alarm-message.entity';
 
 @Entity({
   name: 'TBLworker',
   comment: '작업자 정보',
 })
-export class Worker {
+export class WorkerEntity {
   @PrimaryGeneratedColumn({
     name: 'ID',
     type: 'int',
@@ -29,20 +23,20 @@ export class Worker {
   id: number;
 
   @Column({
-    name: 'officeID',
+    name: 'OfficeID',
     type: 'int',
-    length: 11,
-    comment: '사업소 아이디',
+    comment: '작업자가 속한 검사소 아이디',
   })
-  officeId: number;
+  officeID: number;
 
   @Column({
     name: 'WorkerID',
     type: 'varchar',
     length: 255,
+    unique: true,
     comment: '작업자 아이디',
   })
-  workerId: string;
+  workerID: string;
 
   @Column({
     name: 'WorkerPw',
@@ -63,77 +57,59 @@ export class Worker {
   @Column({
     name: 'WorkerStatus',
     type: 'tinyint',
-    length: 4,
     enum: WorkerStatus,
-    default: WorkerStatus.Use,
     comment: '작업자 상태',
   })
   workerStatus: WorkerStatus;
-
-  @CreateDateColumn({
-    name: 'CreatedAt',
-    type: 'timestamp',
-    default: 'CURRENT_TIMESTAMP',
-    comment: '등록일',
-  })
-  createdAt: Date;
-
-  @UpdateDateColumn({
-    name: 'UpdatedAt',
-    type: 'timestamp',
-    comment: '수정일',
-    nullable: true,
-  })
-  updatedAt?: Date;
-
-  @DeleteDateColumn({
-    name: 'RemovedAt',
-    type: 'timestamp',
-    nullable: true,
-    comment: '삭제일',
-  })
-  removedAt?: Date;
 
   @Column({
     name: 'DeviceToken',
     type: 'varchar',
     length: 255,
     nullable: true,
+    default: null,
     comment: '디바이스 토큰',
   })
-  deviceToken?: string;
+  deviceToken: string;
 
   @Column({
     name: 'ExpireAt',
     type: 'timestamp',
     nullable: true,
+    default: null,
+    comment: '디바이스 토큰 종료일',
   })
-  expireAt?: Date;
+  expireAt: Date;
 
-  @ManyToOne(() => User, (user) => user.workers)
+  @CreateDateColumn({
+    name: 'CreatedAt',
+    type: 'timestamp',
+    default: 'CURRENT_TIMESTAMP',
+    comment: '생성일',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'UpdatedAt',
+    type: 'timestamp',
+    nullable: true,
+    default: null,
+    comment: '수정일',
+  })
+  updatedAt: Date;
+
+  @Column({
+    name: 'RemovedAt',
+    type: 'timestamp',
+    nullable: true,
+    default: null,
+    comment: '삭제일',
+  })
+  removedAt: Date;
+
+  @ManyToOne(() => OfficeEntity, (officeEntity) => officeEntity.workers)
   @JoinColumn({
     name: 'OfficeID',
-    referencedColumnName: 'ID',
   })
-  user: User;
-
-  @ManyToMany(() => Course, (course) => course.workers)
-  @JoinTable({
-    name: 'TBLworkerCourse',
-    joinColumn: {
-      name: 'WorkerID',
-      referencedColumnName: 'ID',
-    },
-    inverseJoinColumn: {
-      name: 'CourseID',
-      referencedColumnName: 'ID',
-    },
-  })
-  courses: Course[];
-
-  @OneToMany(
-    () => WorkerAlarmMessage,
-    (workerAlarmMessage) => workerAlarmMessage.worker,
-  )
-  workerAlarmMessages: WorkerAlarmMessage[];
+  office: OfficeEntity;
 }

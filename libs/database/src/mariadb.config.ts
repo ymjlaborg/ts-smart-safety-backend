@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import databaseConfig from '@app/config/database.config';
+import * as Entities from '@app/entities';
 
 export class MariaDBConfig implements TypeOrmOptionsFactory {
   constructor(
@@ -20,7 +21,7 @@ export class MariaDBConfig implements TypeOrmOptionsFactory {
       synchronize: false,
       dropSchema: false,
       logging: process.env.ENV !== 'production',
-      autoLoadEntities: true,
+      entities: [...Object.values(Entities)],
     };
   }
 }

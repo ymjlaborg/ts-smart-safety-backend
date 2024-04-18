@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { WorkerController } from './worker/worker.controller';
-import { WorkerService } from './worker/worker.service';
+import { WorkerModule } from './worker/worker.module';
 
 @Module({
-  controllers: [WorkerController],
-  providers: [WorkerService],
+  imports: [WorkerModule],
 })
 export class HrModule {}

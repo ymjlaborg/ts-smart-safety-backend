@@ -3,36 +3,30 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { NodeCourse } from './node-course.entity';
-import { Worker } from './worker.entity';
-import { User } from './user.entity';
-import { AlertHistory } from './alert-history.entity';
+import { OfficeEntity } from './office.entity';
 
 @Entity({
   name: 'TBLcourse',
   comment: '사업소 별 진로 저장',
 })
-export class Course {
+export class CourseEntity {
   @PrimaryGeneratedColumn({
     name: 'ID',
     type: 'int',
     comment: '진로 구분 아이디',
   })
-  id: number;
+  courseID: number;
 
   @Column({
     name: 'OfficeID',
     type: 'int',
-    length: 11,
     comment: '사업소 아이디',
   })
-  officeId: number;
+  officeID: number;
 
   @Column({
     name: 'CourseName',
@@ -46,30 +40,22 @@ export class Course {
     name: 'CreatedAt',
     type: 'timestamp',
     default: 'CURRENT_TIMESTAMP',
-    comment: '등록일',
+    comment: '생성일',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     name: 'UpdatedAt',
     type: 'timestamp',
+    nullable: true,
+    default: null,
     comment: '수정일',
   })
-  updatedAt?: Date;
+  updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.courses)
+  @ManyToOne(() => OfficeEntity, (officeEntity) => officeEntity.courses)
   @JoinColumn({
     name: 'OfficeID',
-    referencedColumnName: 'ID',
   })
-  user: User;
-
-  @OneToMany(() => NodeCourse, (nodeCourse) => nodeCourse.node)
-  nodeCourses: NodeCourse[];
-
-  @ManyToMany(() => Worker, (worker) => worker.courses)
-  workers: Worker[];
-
-  @OneToMany(() => AlertHistory, (alertHistory) => alertHistory.course)
-  alertHistories: AlertHistory[];
+  office: OfficeEntity;
 }

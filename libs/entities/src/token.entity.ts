@@ -1,16 +1,16 @@
+import { TokenServiceName, TokenType } from '@app/enum';
 import {
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TokenServiceName, TokenType } from '@app/enum';
 
 @Entity({
   name: 'TBLtoken',
-  comment: '세션 스토리지 토큰',
+  comment: '세션 토큰 관리',
 })
-export class Token {
+export class TokenEntity {
   @PrimaryGeneratedColumn({
     name: 'TokenID',
     type: 'int',
@@ -28,22 +28,27 @@ export class Token {
   serviceName: TokenServiceName;
 
   @Column({
-    name: 'TargetID',
+    name: 'TargetName',
     type: 'int',
-    length: 11,
     comment: '대상 구분 아이디',
   })
   targetID: number;
 
   @Column({
-    name: 'TokenType',
+    name: 'TargetType',
     type: 'tinyint',
-    length: 4,
     enum: TokenType,
-    default: TokenType.Access,
     comment: '토큰 타입',
   })
   tokenType: TokenType;
+
+  @Column({
+    name: 'Token',
+    type: 'varchar',
+    length: 255,
+    comment: '토큰',
+  })
+  token: string;
 
   @Column({
     name: 'ExpireAt',
@@ -55,14 +60,13 @@ export class Token {
   @CreateDateColumn({
     name: 'CreatedAt',
     type: 'timestamp',
-    comment: '생성 일자',
+    comment: '토큰 만료 시간',
   })
   createdAt: Date;
 
   @Column({
     name: 'LastUsedAt',
     type: 'timestamp',
-    nullable: true,
     comment: '마지막으로 사용된 시간',
   })
   lastUsedAt: Date;

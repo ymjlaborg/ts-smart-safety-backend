@@ -8,9 +8,10 @@ import {
   Put,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SigninDto } from './dto/signin.dto';
-import { ErrorResultDto, ResultDto } from '@app/dto';
+import { ErrorResultDto, ResultDto, SigninDto } from '@app/dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('작업자 알림앱')
 @Controller('worker/auth')
 export class AuthController {
   private readonly logger: Logger = new Logger(AuthController.name);
