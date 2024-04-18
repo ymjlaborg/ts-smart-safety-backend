@@ -100,7 +100,10 @@
       "^@app/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
       "^@app/enum(|/.*)$": "<rootDir>/libs/enum/src/$1",
       "^@app/entities(|/.*)$": "<rootDir>/libs/entities/src/$1",
-      "^@app/repositories(|/.*)$": "<rootDir>/libs/repositories/src/$1"
+      "^@app/repositories(|/.*)$": "<rootDir>/libs/repositories/src/$1",
+      "^@app/interceptors(|/.*)$": "<rootDir>/libs/interceptors/src/$1",
+      "^@app/filters(|/.*)$": "<rootDir>/libs/filters/src/$1",
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
     }
   }
 }

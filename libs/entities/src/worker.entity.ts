@@ -3,12 +3,15 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { OfficeEntity } from './office.entity';
 import { WorkerStatus } from '@app/enum';
+import { OfficeEntity } from './office.entity';
+import { CourseEntity } from './course.entity';
 
 @Entity({
   name: 'TBLworker',
@@ -112,4 +115,18 @@ export class WorkerEntity {
     name: 'OfficeID',
   })
   office: OfficeEntity;
+
+  @ManyToMany(() => CourseEntity, (courseEntity) => courseEntity.workers)
+  @JoinTable({
+    name: 'TBLworkerCourse',
+    joinColumn: {
+      name: 'WorkerID',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'CourseID',
+      referencedColumnName: 'courseID',
+    },
+  })
+  courses: CourseEntity[];
 }

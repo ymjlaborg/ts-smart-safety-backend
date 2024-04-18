@@ -6,13 +6,16 @@ import {
   Logger,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ErrorResultDto, ResultDto, SigninDto } from '@app/dto';
+import { SigninDto } from '@app/dto';
 import { ApiTags } from '@nestjs/swagger';
+import { TransformInterceptor } from '@app/interceptors';
 
 @ApiTags('작업자 알림앱')
 @Controller('worker/auth')
+@UseInterceptors(TransformInterceptor)
 export class AuthController {
   private readonly logger: Logger = new Logger(AuthController.name);
 
@@ -20,9 +23,7 @@ export class AuthController {
 
   @Post('signin')
   @HttpCode(HttpStatus.OK)
-  async signin(
-    @Body() signinDto: SigninDto,
-  ): Promise<ResultDto<any> | ErrorResultDto> {
+  async signin(@Body() signinDto: SigninDto): Promise<any> {
     return await this.authService.signin(signinDto);
   }
 

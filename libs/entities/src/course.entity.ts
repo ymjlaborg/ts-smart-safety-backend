@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { OfficeEntity } from './office.entity';
+import { WorkerEntity } from './worker.entity';
 
 @Entity({
   name: 'TBLcourse',
@@ -58,4 +60,7 @@ export class CourseEntity {
     name: 'OfficeID',
   })
   office: OfficeEntity;
+
+  @ManyToMany(() => WorkerEntity, (workerEntity) => workerEntity.courses)
+  workers: WorkerEntity[];
 }

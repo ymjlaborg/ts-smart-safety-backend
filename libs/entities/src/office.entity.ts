@@ -15,6 +15,22 @@ export class OfficeEntity {
   officeID: number;
 
   @Column({
+    name: 'USERID',
+    type: 'varchar',
+    length: 255,
+    comment: '검사소 아이디',
+  })
+  officeSigninID: string;
+
+  @Column({
+    name: 'USERPW',
+    type: 'varchar',
+    length: 255,
+    comment: '검사소 비밀번호',
+  })
+  officeSigninPw: string;
+
+  @Column({
     name: 'USERNAME',
     type: 'varchar',
     length: 255,
