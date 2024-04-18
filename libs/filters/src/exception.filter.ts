@@ -1,4 +1,4 @@
-import { CustomException } from '@app/common';
+import { CustomException, Utils } from '@app/common';
 import { ERROR_CODES } from '@app/enum';
 import {
   ExceptionFilter,
@@ -23,13 +23,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof CustomException) {
       status = exception.getStatus();
-      errorMessage = exception.name;
       errorDetails = exception.getResponse();
+      errorMessage = Utils.getHttpStatusKey(HttpStatus, exception.getStatus());
     } else if (exception instanceof NotFoundException) {
+      console.log('NotFound...');
       status = HttpStatus.NOT_FOUND;
       errorMessage = 'Not Found';
       errorDetails = ERROR_CODES.COMMON_NOT_FOUND;
     } else if (exception instanceof HttpException) {
+      console.log('HttpException');
       status = exception.getStatus();
       errorMessage = exception.message;
       errorDetails = {
@@ -41,8 +43,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       errorMessage = 'Internal server error';
       errorDetails = ERROR_CODES.COMMON_INTERNAL_SERVER;
     }
-
-    console.log('AAA');
 
     response.status(status).json({
       error: errorMessage,

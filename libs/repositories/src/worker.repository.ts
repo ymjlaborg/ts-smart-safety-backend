@@ -67,4 +67,12 @@ export class WorkerRepository extends Repository<WorkerEntity> {
       id: result.id,
     };
   }
+
+  /**
+   * 디바이스 토큰 업데이트
+   * @param deviceToken
+   */
+  async updateDeviceToken(id: number, deviceToken: string, expireAt: Date) {
+    await this.update({ id }, { deviceToken, expireAt, updatedAt: new Date() });
+  }
 }

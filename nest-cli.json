@@ -87,6 +87,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
+    },
+    "strategy": {
+      "type": "library",
+      "root": "libs/strategy",
+      "entryFile": "index",
+      "sourceRoot": "libs/strategy/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/strategy/tsconfig.lib.json"
+      }
     }
   }
 }

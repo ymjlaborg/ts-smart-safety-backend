@@ -71,6 +71,12 @@
       ],
       "@app/common/*": [
         "libs/common/src/*"
+      ],
+      "@app/strategy": [
+        "libs/strategy/src"
+      ],
+      "@app/strategy/*": [
+        "libs/strategy/src/*"
       ]
     }
   }

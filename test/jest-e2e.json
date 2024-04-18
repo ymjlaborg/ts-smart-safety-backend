@@ -28,6 +28,8 @@
     "@app/filters/(.*)": "<rootDir>/../libs/filters/src/$1",
     "@app/filters": "<rootDir>/../libs/filters/src",
     "@app/common/(.*)": "<rootDir>/../libs/common/src/$1",
-    "@app/common": "<rootDir>/../libs/common/src"
+    "@app/common": "<rootDir>/../libs/common/src",
+    "@app/strategy/(.*)": "<rootDir>/../libs/strategy/src/$1",
+    "@app/strategy": "<rootDir>/../libs/strategy/src"
   }
 }

@@ -9,6 +9,8 @@ import {
 import { CustomException } from '@app/common';
 import { TokenService } from 'src/apis/Token/token.service';
 import { TokenServiceName } from '@app/enum';
+import { TokenDto } from '@app/dto/token';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class AuthService {
@@ -68,7 +70,35 @@ export class AuthService {
     return worker;
   }
 
-  async refresh() {}
+  /**
+   * 기존 아이디는 삭제하고 신규 아이디를 작성한다.
+   *
+   * @param refreshToken
+   * @param id
+   */
+  async refresh(id: number): Promise<TokenDto> {
+    const token = await this.tokenService.createToken({
+      serviceName: TokenServiceName.Worker,
+      targetID: id,
+    });
 
-  async deviceToken() {}
+    return token;
+  }
+
+  /**
+   * 디바이스 토큰을 업데이트 한다.
+   *
+   * @param id
+   * @param deviceToken
+   */
+  async deviceToken(id: number, deviceToken: string) {
+    const expireAt: Date = dayjs().add(3, 'month').toDate();
+    await this.workerRepository.updateDeviceToken(id, deviceToken, expireAt);
+
+    return {
+      workerID: id,
+      deviceToken,
+      expireAt,
+    };
+  }
 }
