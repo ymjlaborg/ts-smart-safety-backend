@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Query,
   Req,
   UseGuards,
@@ -35,15 +36,41 @@ export class AlertController {
     return this.alertService.find(id, listDto);
   }
 
+  @ApiBearerAuth('accessToken')
+  @ApiOperation({
+    summary: '작업자 알림 상세',
+    description: '대상 아이디의 상세 정보를 가져온다.',
+  })
   @Get(':id')
+  @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
-  async findById() {}
+  async findById(@Param('id') id: number) {
+    console.log(id);
+    return this.alertService.findById(id);
+  }
 
+  @ApiBearerAuth('accessToken')
+  @ApiOperation({
+    summary: '전체 알림 삭제',
+    description: '작업자가 가지고 있는 전체 알림 삭제',
+  })
   @Delete()
+  @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.NO_CONTENT)
-  async removeAll() {}
+  async removeAll(@Req() req: Request) {
+    const id = req.user as number;
+    await this.alertService.removeAll(id);
+  }
 
+  @ApiBearerAuth('accessToken')
+  @ApiOperation({
+    summary: '대상 아이디 삭제',
+    description: '대상 아이디 삭제',
+  })
   @Delete(':id')
+  @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.NO_CONTENT)
-  async removeById() {}
+  async removeById(@Param('id') id: number) {
+    await this.alertService.removeById(id);
+  }
 }

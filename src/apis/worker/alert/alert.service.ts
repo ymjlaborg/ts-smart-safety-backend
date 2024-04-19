@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { WorkerAlarmMessageRepository } from '@app/repositories';
 import { ListAlertDto } from './dto/list-alert.dto';
+import { CustomException } from '@app/common';
 
 @Injectable()
 export class AlertService {
@@ -31,5 +32,46 @@ export class AlertService {
         currentPage: listDto.page,
       },
     };
+  }
+
+  /**
+   * 아이디로 상세정보를 가져온다.
+   * @param id
+   * @returns
+   */
+  async findById(id: number) {
+    const exists = await this.workerAlarmMessageRepository.existsById(id);
+
+    if (!exists) {
+      throw new CustomException('COURSE_NO', HttpStatus.BAD_REQUEST);
+    }
+
+    await this.workerAlarmMessageRepository.updateReadAtById(id);
+    return await this.workerAlarmMessageRepository.findById(id);
+  }
+
+  /**
+   * 작업자 아이디가 가지고 있는 모든 정보를 삭제한다.
+   *
+   * @param workerID
+   * @returns
+   */
+  async removeAll(workerID: number) {
+    return await this.workerAlarmMessageRepository.removeAll(workerID);
+  }
+
+  /**
+   *
+   *
+   * @param id
+   */
+  async removeById(id: number) {
+    const exists = await this.workerAlarmMessageRepository.existsById(id);
+
+    if (!exists) {
+      throw new CustomException('COURSE_NO', HttpStatus.BAD_REQUEST);
+    }
+
+    return await this.workerAlarmMessageRepository.removeById(id);
   }
 }
