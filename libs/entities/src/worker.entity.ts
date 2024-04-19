@@ -6,6 +6,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -13,6 +14,7 @@ import { WorkerStatus } from '@app/enum';
 import { OfficeEntity } from './office.entity';
 import { CourseEntity } from './course.entity';
 import { TokenDto } from '@app/dto/token';
+import { WorkerAlarmMessageEntity } from './worker-alarm-message.entity';
 
 @Entity({
   name: 'TBLworker',
@@ -130,6 +132,12 @@ export class WorkerEntity {
     },
   })
   courses: CourseEntity[];
+
+  @OneToMany(
+    () => WorkerAlarmMessageEntity,
+    (workerAlarmMessageEntity) => workerAlarmMessageEntity.alertHistory,
+  )
+  workerAlarmMessages: WorkerAlarmMessageEntity[];
 
   token: TokenDto;
 }

@@ -5,11 +5,13 @@ import {
   JoinColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { OfficeEntity } from './office.entity';
 import { WorkerEntity } from './worker.entity';
+import { AlertHistoryEntity } from './alert-history.entity';
 
 @Entity({
   name: 'TBLcourse',
@@ -63,4 +65,10 @@ export class CourseEntity {
 
   @ManyToMany(() => WorkerEntity, (workerEntity) => workerEntity.courses)
   workers: WorkerEntity[];
+
+  @OneToMany(
+    () => AlertHistoryEntity,
+    (alertHistoryEntity) => alertHistoryEntity.course,
+  )
+  alertHistories: AlertHistoryEntity[];
 }
