@@ -48,7 +48,7 @@ export class AuthController {
   @ApiOkResponse({
     description: '로그인 성공',
   })
-  async signin(@Body() signinDto: SigninDto): Promise<any> {
+  async signin(@Body() signinDto: SigninDto) {
     return await this.authService.signin(signinDto);
   }
 

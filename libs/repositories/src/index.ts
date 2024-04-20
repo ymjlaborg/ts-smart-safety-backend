@@ -4,3 +4,4 @@ export * from './token.repository';
 export * from './course.repository';
 export * from './worker-alarm-message.repository';
 export * from './repositories.module';
+export * from './nodedata.repository';

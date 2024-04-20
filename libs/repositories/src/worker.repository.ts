@@ -94,13 +94,23 @@ export class WorkerRepository extends Repository<WorkerEntity> {
   }
 
   /**
-   * 디바이스 토큰 업데이트
-   * @param deviceToken
+   * 대상 작업자의 워치 토큰 업데이트
+   *
+   * @param id
+   * @param watchToken
+   * @param expireAt
    */
   async updateWatchToken(id: number, watchToken: string, expireAt: Date) {
     await this.update({ id }, { watchToken, expireAt, updatedAt: new Date() });
   }
 
+  /**
+   * 대상 작업자의 모바일 토큰 업데이트
+   *
+   * @param id
+   * @param mobileToken
+   * @param expireAt
+   */
   async updateMobileToken(id: number, mobileToken: string, expireAt: Date) {
     await this.update({ id }, { mobileToken, expireAt, updatedAt: new Date() });
   }

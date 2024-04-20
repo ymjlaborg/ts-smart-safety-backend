@@ -4,6 +4,7 @@ import { WorkerRepository } from './worker.repository';
 import { CourseRepository } from './course.repository';
 import { TokenRepository } from './token.repository';
 import { WorkerAlarmMessageRepository } from './worker-alarm-message.repository';
+import { NodedataRepository } from './nodedata.repository';
 
 @Module({
   providers: [
@@ -12,6 +13,7 @@ import { WorkerAlarmMessageRepository } from './worker-alarm-message.repository'
     CourseRepository,
     TokenRepository,
     WorkerAlarmMessageRepository,
+    NodedataRepository,
   ],
   exports: [
     OfficeRepository,
@@ -19,6 +21,7 @@ import { WorkerAlarmMessageRepository } from './worker-alarm-message.repository'
     CourseRepository,
     TokenRepository,
     WorkerAlarmMessageRepository,
+    NodedataRepository,
   ],
 })
 export class RepositoriesModule {}
