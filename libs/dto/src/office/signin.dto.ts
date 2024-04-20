@@ -3,7 +3,7 @@ import { IsNotEmpty, Matches, MinLength } from 'class-validator';
 
 export class SigninDto {
   @IsNotEmpty({
-    message: '',
+    message: '검사소 아이디는 필수 입력입니다.',
   })
   @ApiProperty({
     description: '검사소 아이디',
@@ -12,7 +12,7 @@ export class SigninDto {
   officeID: number;
 
   @IsNotEmpty({
-    message: '',
+    message: '작업자 아이디는 필수 입력입니다.',
   })
   @MinLength(4, {
     message: '',
@@ -24,7 +24,7 @@ export class SigninDto {
   workerID: string;
 
   @IsNotEmpty({
-    message: '',
+    message: '작업자 비밀번호는 필수 입력입니다.',
   })
   @Matches(/^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/, {
     message:
@@ -35,4 +35,13 @@ export class SigninDto {
     required: true,
   })
   workerPw: string;
+
+  @IsNotEmpty({
+    message: '모바일 토큰은 필수 입력입니다.',
+  })
+  @ApiProperty({
+    description: 'FCM 토큰 (모바일)',
+    required: true,
+  })
+  mobileToken: string;
 }

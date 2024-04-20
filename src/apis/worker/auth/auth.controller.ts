@@ -68,22 +68,29 @@ export class AuthController {
     return await this.authService.refresh(id);
   }
 
-  @Put('deviceToken')
+  @Put('watchToken')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('access'))
   @ApiBearerAuth('accessToken')
   @ApiOperation({
-    summary: '디바이스 토큰 저장',
-    description: '디바이스 토큰을 저장한다.',
+    summary: 'FCM 워치 토큰 저장',
+    description: 'FCM 워치 토큰을 저장한다.',
   })
-  async deviceToken(
-    @Req() req: Request,
-    @Body() { deviceToken }: UpdateDeviceToken,
-  ) {
+  async watchToken(@Req() req: Request, @Body() { token }: UpdateDeviceToken) {
     const id: number = req.user as number;
+    return await this.authService.watchToken(id, token);
+  }
 
-    console.log(id, deviceToken);
-
-    return await this.authService.deviceToken(id, deviceToken);
+  @Put('mobileToken')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard('access'))
+  @ApiBearerAuth('accessToken')
+  @ApiOperation({
+    summary: 'FCM 모바일 토큰 저장',
+    description: 'FCM 모바일 토큰을 저장한다.',
+  })
+  async mobileToken(@Req() req: Request, @Body() { token }: UpdateDeviceToken) {
+    const id: number = req.user as number;
+    return await this.authService.mobileToken(id, token);
   }
 }

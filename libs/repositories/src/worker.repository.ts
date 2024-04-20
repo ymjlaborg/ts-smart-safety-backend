@@ -27,9 +27,21 @@ export class WorkerRepository extends Repository<WorkerEntity> {
    * @param deviceToken
    * @returns
    */
-  async existsByDeviceToken(deviceToken: string): Promise<boolean> {
+  async existsByMobileToken(mobileToken: string): Promise<boolean> {
     return await this.existsBy({
-      deviceToken,
+      mobileToken,
+    });
+  }
+
+  /**
+   * 동일한 디바이스 토큰이 존재하는지 확인
+   *
+   * @param deviceToken
+   * @returns
+   */
+  async existsByWatchToken(watchToken: string): Promise<boolean> {
+    return await this.existsBy({
+      watchToken,
     });
   }
 
@@ -43,14 +55,15 @@ export class WorkerRepository extends Repository<WorkerEntity> {
   async findByWorkerIDAndOfficeID(
     officeID: number,
     workerID: string,
-  ): Promise<WorkerEntity> {
+  ): Promise<any> {
     const query = this.createQueryBuilder('worker')
       .select([
         'worker.id',
         'worker.workerID',
         'worker.workerPw',
         'worker.workerName',
-        'worker.deviceToken',
+        'worker.mobileToken',
+        'worker.watchToken',
         'worker.expireAt',
         'office.officeID',
         'office.officeName',
@@ -84,7 +97,11 @@ export class WorkerRepository extends Repository<WorkerEntity> {
    * 디바이스 토큰 업데이트
    * @param deviceToken
    */
-  async updateDeviceToken(id: number, deviceToken: string, expireAt: Date) {
-    await this.update({ id }, { deviceToken, expireAt, updatedAt: new Date() });
+  async updateWatchToken(id: number, watchToken: string, expireAt: Date) {
+    await this.update({ id }, { watchToken, expireAt, updatedAt: new Date() });
+  }
+
+  async updateMobileToken(id: number, mobileToken: string, expireAt: Date) {
+    await this.update({ id }, { mobileToken, expireAt, updatedAt: new Date() });
   }
 }

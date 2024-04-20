@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ListOfficeDto } from '@app/dto';
 import { OfficeRepository } from '@app/repositories';
 
 @Injectable()
@@ -8,7 +7,11 @@ export class CommonService {
 
   constructor(private readonly officeRepository: OfficeRepository) {}
 
-  async office(): Promise<ListOfficeDto[]> {
+  /**
+   * 검사소 목록을 가져온다.
+   * @returns
+   */
+  async office() {
     return await this.officeRepository.findAll();
   }
 

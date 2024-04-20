@@ -9,6 +9,7 @@ export const validationSchema = joi.object({
   AUTH_SALT_ROUNDS: joi.number().required(),
   AUTH_JWT_SECRET: joi.string().required(),
   AUTH_JWT_ACCESS_KEY: joi.string().required(),
+  AUTH_JWT_MOBILE_TIMEOUT: joi.string().required(),
   AUTH_JWT_ACCESS_TIMEOUT: joi.string().required(),
   AUTH_JWT_REFRESH_KEY: joi.string().required(),
   AUTH_JWT_REFRESH_TIMEOUT: joi.string().required(),

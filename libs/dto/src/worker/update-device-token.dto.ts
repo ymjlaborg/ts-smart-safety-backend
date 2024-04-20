@@ -12,5 +12,5 @@ export class UpdateDeviceToken {
     description: 'FCM을 통해 취득한 디바이스 토큰',
     required: true,
   })
-  deviceToken: string;
+  token: string;
 }

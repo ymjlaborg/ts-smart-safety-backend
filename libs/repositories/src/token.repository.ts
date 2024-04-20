@@ -61,13 +61,6 @@ export class TokenRepository extends Repository<TokenEntity> {
   }
 
   /**
-   * 토큰을 등록한다.
-   */
-  async createToken(token: TokenEntity) {
-    await this.create(token);
-  }
-
-  /**
    * 해당하는 토큰 아이디를 삭제한다.
    *
    * @param serviceName

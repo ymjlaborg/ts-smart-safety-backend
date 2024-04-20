@@ -1,5 +1,5 @@
 import { CreateTokenDto, TokenDto } from '@app/dto/token';
-import { TokenType } from '@app/enum';
+import { TokenServiceName, TokenType } from '@app/enum';
 import { TokenRepository } from '@app/repositories';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -31,6 +31,13 @@ export class TokenService {
     }
 
     const accessToken = await this.createAccessToken(createTokenDto);
+
+    if (serviceName === TokenServiceName.Worker) {
+      return {
+        accessToken,
+      };
+    }
+
     const refreshToken = await this.createRefreshToken(createTokenDto);
 
     return {
@@ -49,22 +56,32 @@ export class TokenService {
     createTokenDto: CreateTokenDto,
   ): Promise<string> {
     const { serviceName, targetID } = createTokenDto;
-    const { accessKey, accessExpiresIn } = this.configService.get('auth');
+    const { accessKey, accessExpiresIn, mobileAccessExpiresIn } =
+      this.configService.get('auth');
+
+    const expiresIn =
+      serviceName === TokenServiceName.Worker
+        ? mobileAccessExpiresIn
+        : accessExpiresIn;
+
     const accessToken = await this.jwtService.sign(
       { id: targetID },
       {
         secret: accessKey,
-        expiresIn: accessExpiresIn,
+        expiresIn,
       },
     );
 
     const expireAt = this.getTokenExpirationTime(accessToken);
 
-    await this.tokenRepository.create({
+    console.log('CREATED!!', expireAt);
+    await this.tokenRepository.save({
       serviceName,
       targetID,
+      token: accessToken,
       tokenType: TokenType.Access,
       expireAt,
+      createdAt: new Date(),
     });
 
     return accessToken;
@@ -97,6 +114,7 @@ export class TokenService {
       tokenType: TokenType.Refresh,
       token: refreshToken,
       expireAt,
+      createdAt: new Date(),
     });
 
     return refreshToken;

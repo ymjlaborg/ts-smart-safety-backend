@@ -13,7 +13,6 @@ import {
 import { WorkerStatus } from '@app/enum';
 import { OfficeEntity } from './office.entity';
 import { CourseEntity } from './course.entity';
-import { TokenDto } from '@app/dto/token';
 import { WorkerAlarmMessageEntity } from './worker-alarm-message.entity';
 
 @Entity({
@@ -69,14 +68,24 @@ export class WorkerEntity {
   workerStatus: WorkerStatus;
 
   @Column({
-    name: 'DeviceToken',
+    name: 'WatchToken',
     type: 'varchar',
     length: 255,
     nullable: true,
     default: null,
-    comment: '디바이스 토큰',
+    comment: 'FCM 워치 토큰',
   })
-  deviceToken: string;
+  watchToken: string;
+
+  @Column({
+    name: 'MobileToken',
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+    default: null,
+    comment: 'FCM 모바일 토큰',
+  })
+  mobileToken: string;
 
   @Column({
     name: 'ExpireAt',
@@ -138,6 +147,4 @@ export class WorkerEntity {
     (workerAlarmMessageEntity) => workerAlarmMessageEntity.alertHistory,
   )
   workerAlarmMessages: WorkerAlarmMessageEntity[];
-
-  token: TokenDto;
 }

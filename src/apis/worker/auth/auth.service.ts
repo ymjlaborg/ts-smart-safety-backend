@@ -29,7 +29,7 @@ export class AuthService {
    * @returns
    */
   async signin(signinDto: SigninDto) {
-    const { officeID, workerID, workerPw } = signinDto;
+    const { officeID, workerID, workerPw, mobileToken } = signinDto;
 
     const existsOffice = await this.officeRepository.existsByOfficeID(officeID);
 
@@ -54,6 +54,8 @@ export class AuthService {
     if (!isMatched) {
       throw new CustomException('AUTH_NOT_MATCH', HttpStatus.UNAUTHORIZED);
     }
+
+    await this.mobileToken(worker.id, mobileToken);
 
     delete worker.workerPw;
 
@@ -91,24 +93,32 @@ export class AuthService {
    * @param id
    * @param deviceToken
    */
-  async deviceToken(id: number, deviceToken: string) {
-    const existsDeviceToken =
-      await this.workerRepository.existsByDeviceToken(deviceToken);
-
-    if (existsDeviceToken) {
-      throw new CustomException(
-        'DEVICE_TOKEN_DUPLICATED',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
+  async watchToken(id: number, watchToken: string) {
     const expireAt: Date = dayjs(new Date()).add(3, 'month').toDate();
 
-    await this.workerRepository.updateDeviceToken(id, deviceToken, expireAt);
+    await this.workerRepository.updateWatchToken(id, watchToken, expireAt);
 
     return {
       workerID: id,
-      deviceToken,
+      watchToken,
+      expireAt,
+    };
+  }
+
+  /**
+   * 디바이스 토큰을 업데이트 한다.
+   *
+   * @param id
+   * @param deviceToken
+   */
+  async mobileToken(id: number, mobileToken: string) {
+    const expireAt: Date = dayjs(new Date()).add(3, 'month').toDate();
+
+    await this.workerRepository.updateMobileToken(id, mobileToken, expireAt);
+
+    return {
+      workerID: id,
+      mobileToken,
       expireAt,
     };
   }
