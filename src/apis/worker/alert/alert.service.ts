@@ -17,10 +17,17 @@ export class AlertService {
   async find(id: number, listDto: ListAlertDto) {
     const totalCount: number =
       await this.workerAlarmMessageRepository.countAllByWorker(id, listDto);
-    const list = await this.workerAlarmMessageRepository.findAllByWorker(
-      id,
-      listDto,
-    );
+    const list = (
+      await this.workerAlarmMessageRepository.findAllByWorker(id, listDto)
+    ).map((value) => {
+      const alertHistory = value.alertHistory;
+      return {
+        ...alertHistory,
+        id: value.id,
+        readAt: value.readAt,
+        sendAt: value.sendAt,
+      };
+    });
 
     const totalPage: number = Math.ceil(totalCount / listDto.limit);
 
@@ -47,7 +54,15 @@ export class AlertService {
     }
 
     await this.workerAlarmMessageRepository.updateReadAtById(id);
-    return await this.workerAlarmMessageRepository.findById(id);
+
+    const data = await this.workerAlarmMessageRepository.findById(id);
+
+    return {
+      id: data.id,
+      readAt: data.readAt,
+      sendAt: data.sendAt,
+      ...data.alertHistory,
+    };
   }
 
   /**
