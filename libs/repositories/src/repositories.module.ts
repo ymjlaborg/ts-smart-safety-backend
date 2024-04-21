@@ -5,6 +5,7 @@ import { CourseRepository } from './course.repository';
 import { TokenRepository } from './token.repository';
 import { WorkerAlarmMessageRepository } from './worker-alarm-message.repository';
 import { NodedataRepository } from './nodedata.repository';
+import { AlertHistoryRepository } from './alert-history.repository';
 
 @Module({
   providers: [
@@ -12,6 +13,7 @@ import { NodedataRepository } from './nodedata.repository';
     WorkerRepository,
     CourseRepository,
     TokenRepository,
+    AlertHistoryRepository,
     WorkerAlarmMessageRepository,
     NodedataRepository,
   ],
@@ -20,6 +22,7 @@ import { NodedataRepository } from './nodedata.repository';
     WorkerRepository,
     CourseRepository,
     TokenRepository,
+    AlertHistoryRepository,
     WorkerAlarmMessageRepository,
     NodedataRepository,
   ],

@@ -12,6 +12,4 @@ export class AuthService {
   }
 
   async refresh() {}
-
-  async deviceToken() {}
 }

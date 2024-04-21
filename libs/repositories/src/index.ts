@@ -5,3 +5,4 @@ export * from './course.repository';
 export * from './worker-alarm-message.repository';
 export * from './repositories.module';
 export * from './nodedata.repository';
+export * from './alert-history.repository';
