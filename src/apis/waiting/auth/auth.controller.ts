@@ -44,10 +44,22 @@ export class AuthController {
   })
   @ApiBearerAuth('refreshToken')
   @Get('refresh')
-  @UseGuards(AuthGuard('access'))
+  @UseGuards(AuthGuard('refresh'))
   @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request) {
     const id: number = req.body as number;
     return await this.authService.refresh(id);
+  }
+
+  @ApiOperation({
+    summary: '대기실 로그아웃',
+    description: '대기실 사용자 로그아웃',
+  })
+  @Post('signout')
+  @UseGuards(AuthGuard('access'))
+  @HttpCode(HttpStatus.OK)
+  async signout(@Req() req: Request) {
+    const id: number = req.body as number;
+    return await this.authService.signout(id);
   }
 }

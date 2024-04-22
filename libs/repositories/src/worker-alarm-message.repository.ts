@@ -65,9 +65,15 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       sort = 'tam.readAt';
     } else if (listDto.sort === 'sendAt') {
       sort = 'tam.sendAt';
+    } else {
+      sort = 'ah.lTime';
     }
 
-    query.orderBy(sort, listDto.order.toUpperCase() as 'DESC' | 'ASC');
+    if (listDto.order || listDto.order.trim().length > 0) {
+      query.orderBy(sort, listDto.order.toUpperCase() as 'DESC' | 'ASC');
+    } else {
+      query.orderBy(sort, 'DESC');
+    }
 
     return await query.getMany();
   }

@@ -46,4 +46,27 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
 
     return await query.getOne();
   }
+
+  /**
+   * 알림 총 갯수
+   *
+   * @returns
+   */
+  async countAll() {
+    const query = this.createQueryBuilder('a').innerJoin('a.course', 'c');
+
+    return await query.getCount();
+  }
+
+  /**
+   * 알림의 목록을 가져온다.
+   * @returns
+   */
+  async findAll() {
+    const query = this.createQueryBuilder('a')
+      .innerJoin('a.course', 'c')
+      .orderBy('a.lTime', 'DESC');
+
+    return await query.getMany();
+  }
 }

@@ -47,6 +47,28 @@ export class TokenService {
   }
 
   /**
+   * 대상 토큰 삭제
+   *
+   * @param serviceName
+   * @param targetID
+   * @returns
+   */
+  async removeByTarget(serviceName: TokenServiceName, targetID: number) {
+    const count = await this.tokenRepository.countByTarget(
+      serviceName,
+      targetID,
+    );
+
+    if (count > 0) {
+      await this.tokenRepository.removeByTarget(serviceName, targetID);
+    }
+
+    return {
+      count,
+    };
+  }
+
+  /**
    * 접근 토큰을 생성하여 전달한다.
    *
    * @param createTokenDto

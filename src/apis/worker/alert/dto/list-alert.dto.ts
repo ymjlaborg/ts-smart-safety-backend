@@ -10,8 +10,8 @@ enum Sort {
 }
 
 enum Order {
-  Desc = 'desc',
-  Asc = 'asc',
+  Desc = 'DESC',
+  Asc = 'ASC',
 }
 
 export class ListAlertDto extends ListDto {
@@ -40,5 +40,5 @@ export class ListAlertDto extends ListDto {
     example: Order.Desc,
     type: String,
   })
-  order: Order;
+  order?: Order = Order.Desc;
 }

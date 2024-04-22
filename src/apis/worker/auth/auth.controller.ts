@@ -36,8 +36,6 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signin')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: '작업자 로그인',
     description: '작업자가 로그인을 진행한다.',
@@ -48,6 +46,8 @@ export class AuthController {
   @ApiOkResponse({
     description: '로그인 성공',
   })
+  @Post('signin')
+  @HttpCode(HttpStatus.OK)
   async signin(@Body() signinDto: SigninDto) {
     return await this.authService.signin(signinDto);
   }
