@@ -77,3 +77,9 @@ export enum TokenType {
   Access = 1, // AccessToken
   Refresh = 2, // RefreshToken
 }
+
+export enum EventName {
+  WaitingFire = 'waiting.fire',
+  ControlAlarm = 'control.alarm',
+  WorkerPush = 'worker.push',
+}

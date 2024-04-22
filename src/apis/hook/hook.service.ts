@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AlertHistoryRepository, NodeRepository } from '@app/repositories';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { AlertType, EventName } from '@app/enum';
 
 @Injectable()
 export class HookService {
@@ -24,7 +25,12 @@ export class HookService {
     const result = await this.alertHistoryRepository.findById(alarmId);
 
     if (result) {
-      this.eventEmitter.emit('alarm.data', result);
+      if (result.alertType === AlertType.Fire) {
+        this.eventEmitter.emit(EventName.WaitingFire, result);
+      }
+
+      this.eventEmitter.emit(EventName.ControlAlarm, result);
+      this.eventEmitter.emit(EventName.WorkerPush, result);
     }
   }
 }

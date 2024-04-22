@@ -6,6 +6,8 @@ import {
   WorkerRepository,
 } from '@app/repositories';
 import { In } from 'typeorm';
+import { OnEvent } from '@nestjs/event-emitter';
+import { EventName } from '@app/enum';
 
 @Injectable()
 export class CommonService {
@@ -84,5 +86,14 @@ export class CommonService {
         lTime: new Date(),
       },
     });
+  }
+
+  @OnEvent(EventName.WorkerPush)
+  workerPush(event) {
+    console.log(event);
+    // 진로 파악
+    // 진로 파악하여 이벤트 발송 대상 저장
+    // 발송 -> DB 저장
+    // 전달 객체 확인
   }
 }

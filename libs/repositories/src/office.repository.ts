@@ -32,4 +32,23 @@ export class OfficeRepository extends Repository<OfficeEntity> {
 
     return await query.getMany();
   }
+
+  /**
+   * 아이디, 비밀번호 일치한 정보 찾기
+   *
+   * @param officeID
+   * @param officePw
+   * @returns
+   */
+  async findByOfficeIDAndOfficePw(officeID: string, officePw: string) {
+    const query = this.createQueryBuilder('office').where(
+      'office.officeSigninID = :officeID AND office.officeSigninPw = PASSWORD(:officePw)',
+      {
+        officeID,
+        officePw,
+      },
+    );
+
+    return await query.getOne();
+  }
 }

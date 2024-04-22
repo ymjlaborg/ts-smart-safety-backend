@@ -14,7 +14,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { SigninDto } from './dto/signin.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@app/interceptors';
 import { HttpExceptionFilter } from '@app/filters';
 import { Request } from 'express';
@@ -28,12 +28,24 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({
+    description: '통합 관제 로그인',
+  })
   @Post('signin')
   @HttpCode(HttpStatus.OK)
-  async signin(@Body() siginDto: SigninDto) {}
+  async signin(@Body() signinDto: SigninDto) {
+    return await this.authService.signin(signinDto);
+  }
 
+  @ApiOperation({
+    description: '통합 관제 인증키 업데이트',
+  })
+  @ApiBearerAuth('refreshToken')
   @Get('refresh')
-  @UseGuards(AuthGuard('access'))
+  @UseGuards(AuthGuard('refresh'))
   @HttpCode(HttpStatus.OK)
-  async refresh(@Req() req: Request) {}
+  async refresh(@Req() req: Request) {
+    const id: number = req.user as number;
+    return await this.authService.refresh(id);
+  }
 }

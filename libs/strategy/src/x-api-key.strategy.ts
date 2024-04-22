@@ -31,6 +31,8 @@ export class XApiKeyStrategy extends PassportStrategy(Strategy, 'xapikey') {
       const key = Utils.decryptAES(xApiKey, xApiSecretKey, xApiIv);
       const isMatch = await Utils.bcryptCompare(key, apiKey as string);
 
+      console.log(isMatch, key);
+
       if (!isMatch) {
         throw new UnauthorizedException();
       }

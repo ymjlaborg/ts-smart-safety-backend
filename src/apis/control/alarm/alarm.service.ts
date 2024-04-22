@@ -8,12 +8,10 @@ export class AlarmService {
   private readonly logger: Logger = new Logger(AlarmService.name);
   private alarmSubject = new Subject<any>();
 
-  getAlarmStream() {
-    return this.alarmSubject.asObservable();
-  }
+  constructor() {}
 
-  @OnEvent(EventName.WaitingFire)
-  handleFireAlarm(event) {
+  @OnEvent(EventName.ControlAlarm)
+  handleAlarm(event) {
     this.alarmSubject.next(event);
   }
 }
