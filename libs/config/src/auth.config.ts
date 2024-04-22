@@ -8,4 +8,7 @@ export default registerAs('auth', () => ({
   mobileAccessExpiresIn: process.env.AUTH_JWT_MOBILE_TIMEOUT,
   refreshKey: process.env.AUTH_JWT_REFRESH_KEY,
   refreshExpiresIn: process.env.AUTH_JWT_REFRESH_TIMEOUT,
+  xApiKey: process.env.AUTH_X_API_KEY,
+  xApiSecretKey: process.env.AUTH_X_API_SECRET_KEY,
+  xApiIv: process.env.AUTH_X_API_IV,
 }));

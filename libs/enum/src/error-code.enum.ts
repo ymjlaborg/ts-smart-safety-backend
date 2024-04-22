@@ -31,6 +31,10 @@ export const ERROR_CODES = {
     CODE: 1030,
     MESSAGE: '접근 권한이 없습니다.',
   },
+  AUTH_BAD_API_KEY: {
+    CODE: 1040,
+    MESSAGE: 'API키가 올바르지 않습니다.',
+  },
   DEVICE_TOKEN_NO: {
     CODE: 2010,
     MESSAGE: '디바이스 토큰이 없습니다.',

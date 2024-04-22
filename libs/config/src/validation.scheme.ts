@@ -13,4 +13,7 @@ export const validationSchema = joi.object({
   AUTH_JWT_ACCESS_TIMEOUT: joi.string().required(),
   AUTH_JWT_REFRESH_KEY: joi.string().required(),
   AUTH_JWT_REFRESH_TIMEOUT: joi.string().required(),
+  AUTH_X_API_KEY: joi.string().required(),
+  AUTH_X_API_SECRET_KEY: joi.string().required(),
+  AUTH_X_API_IV: joi.string().required(),
 });
