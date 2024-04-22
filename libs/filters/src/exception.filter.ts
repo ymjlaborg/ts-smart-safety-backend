@@ -7,6 +7,7 @@ import {
   HttpStatus,
   HttpException,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -39,6 +40,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         errorMessage: errorMessage,
       };
     } else {
+      Logger.error(exception.message);
       status = HttpStatus.INTERNAL_SERVER_ERROR;
       errorMessage = 'Internal server error';
       errorDetails = ERROR_CODES.COMMON_INTERNAL_SERVER;

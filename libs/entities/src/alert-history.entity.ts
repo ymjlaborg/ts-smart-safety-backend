@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { CourseEntity } from './course.entity';
 import { WorkerAlarmMessageEntity } from './worker-alarm-message.entity';
+import { NodeEntity } from './node.entity';
 
 @Entity({
   name: 'AlertHistory',
@@ -39,7 +40,7 @@ export class AlertHistoryEntity {
   @Column({
     name: 'NodeID',
     type: 'varchar',
-    length: 255,
+    // length: 255,
     comment: '노드 아이디',
   })
   nodeID: string;
@@ -96,7 +97,7 @@ export class AlertHistoryEntity {
     type: 'tinyint',
     enum: EntranceType,
     nullable: true,
-    comment: '디바이스 아이디',
+    comment: '출입구 확인',
   })
   entranceType: EntranceType;
 
@@ -111,4 +112,11 @@ export class AlertHistoryEntity {
     (workerAlarmMessageEntity) => workerAlarmMessageEntity.alertHistory,
   )
   workerAlarmMessages: WorkerAlarmMessageEntity[];
+
+  @ManyToOne(() => NodeEntity, (nodeEntity) => nodeEntity.alertHistories)
+  @JoinColumn({
+    name: 'NodeID',
+    referencedColumnName: 'nodeID',
+  })
+  node: NodeEntity;
 }

@@ -6,6 +6,7 @@ import { TokenRepository } from './token.repository';
 import { WorkerAlarmMessageRepository } from './worker-alarm-message.repository';
 import { NodedataRepository } from './nodedata.repository';
 import { AlertHistoryRepository } from './alert-history.repository';
+import { NodeRepository } from './node.repository';
 
 @Module({
   providers: [
@@ -16,6 +17,7 @@ import { AlertHistoryRepository } from './alert-history.repository';
     AlertHistoryRepository,
     WorkerAlarmMessageRepository,
     NodedataRepository,
+    NodeRepository,
   ],
   exports: [
     OfficeRepository,
@@ -25,6 +27,7 @@ import { AlertHistoryRepository } from './alert-history.repository';
     AlertHistoryRepository,
     WorkerAlarmMessageRepository,
     NodedataRepository,
+    NodeRepository,
   ],
 })
 export class RepositoriesModule {}
