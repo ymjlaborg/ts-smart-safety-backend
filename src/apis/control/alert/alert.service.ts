@@ -23,5 +23,7 @@ export class AlertService {
    * 알림 목록을 가져온다.
    * @param query
    */
-  async find(query: ListAlertDto) {}
+  async find(id: number, query: ListAlertDto) {
+    return await this.alertHistoryRepository.findAll(id, query);
+  }
 }

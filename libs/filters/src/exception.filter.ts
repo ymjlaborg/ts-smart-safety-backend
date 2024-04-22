@@ -22,12 +22,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
     let errorMessage: string;
     let errorDetails: any;
 
+    Logger.error(
+      `request.url = ${request.url}`,
+      `errorMessage = ${exception.message || 'ERROR!'}`,
+    );
+
     if (exception instanceof CustomException) {
       status = exception.getStatus();
       errorDetails = exception.getResponse();
       errorMessage = Utils.getHttpStatusKey(HttpStatus, exception.getStatus());
     } else if (exception instanceof NotFoundException) {
-      console.log('NotFound...');
       status = HttpStatus.NOT_FOUND;
       errorMessage = 'Not Found';
       errorDetails = ERROR_CODES.COMMON_NOT_FOUND;

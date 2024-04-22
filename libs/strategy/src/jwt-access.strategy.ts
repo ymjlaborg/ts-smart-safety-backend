@@ -28,8 +28,12 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
     try {
       const accessToken = req.headers['authorization']?.slice(7);
 
+      this.logger.log(`accessToken = ${accessToken || 'NULL'}`);
+      this.logger.log(
+        `authorization = ${req.headers['authorization'] || 'NULL'}`,
+      );
+
       if (!accessToken) {
-        console.log('ASDAD');
         throw new BadRequestException('');
       }
 
