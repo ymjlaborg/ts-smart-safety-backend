@@ -1,6 +1,6 @@
 import { WorkerEntity } from '@app/entities';
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, IsNull, Not, Repository } from 'typeorm';
 import { CreateWorkerDto } from '@app/dto';
 import { WorkerStatus } from '@app/enum';
 
@@ -113,5 +113,19 @@ export class WorkerRepository extends Repository<WorkerEntity> {
    */
   async updateMobileToken(id: number, mobileToken: string, expireAt: Date) {
     await this.update({ id }, { mobileToken, expireAt, updatedAt: new Date() });
+  }
+
+  /**
+   * 검사소 아이디로 검사소에 속한 작업자들을 불러온다.
+   *
+   * @param officeID
+   */
+  async findAllByOfficeID(officeID: number) {
+    return await this.findBy({
+      officeID,
+      workerStatus: WorkerStatus.Use,
+      mobileToken: Not(IsNull()),
+      watchToken: Not(IsNull()),
+    });
   }
 }

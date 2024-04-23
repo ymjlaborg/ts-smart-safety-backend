@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { AlertHistoryRepository, NodeRepository } from '@app/repositories';
+import { AlertHistoryRepository } from '@app/repositories';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AlertType, EventName } from '@app/enum';
+import { NodeDataDto } from './dto/node-data.dto';
 
 @Injectable()
 export class HookService {
   constructor(
     private readonly alertHistoryRepository: AlertHistoryRepository,
-    private readonly nodeRepository: NodeRepository,
     private readonly eventEmitter: EventEmitter2,
   ) {}
 
-  async saveNodedata(nodedata: any) {
-    // TODO 1. Redis에 연결하여 데이터 저장
-    // 2. this.eventEmitter로 데이터 전달
-    // 3. this.eventEmitter로 전달 받은 데이터도 전달.
-  }
+  /**
+   * 노드 데이터를 전달한다.
+   * @param nodedatas
+   */
+  async sendNodedatas(nodedatas: NodeDataDto[]) {}
 
   /**
    * 알림 전달

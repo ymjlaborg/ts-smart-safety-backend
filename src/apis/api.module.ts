@@ -5,6 +5,7 @@ import { HrModule } from './hr/hr.module';
 import { HookModule } from './hook/hook.module';
 import { ControlModule } from './control/control.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     HrModule,
     HookModule,
     ControlModule,
+    NotificationModule,
   ],
 })
 export class ApiModule {}

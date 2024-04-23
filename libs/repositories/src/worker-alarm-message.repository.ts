@@ -1,5 +1,6 @@
 import { WorkerAlarmMessageEntity } from '@app/entities';
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ListAlertDto } from 'src/apis/worker/alert/dto/list-alert.dto';
 import { DataSource, Repository } from 'typeorm';
 
@@ -7,7 +8,10 @@ import { DataSource, Repository } from 'typeorm';
 export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageEntity> {
   private readonly logger: Logger = new Logger(WorkerAlarmMessageEntity.name);
 
-  constructor(private dataSource: DataSource) {
+  constructor(
+    private dataSource: DataSource,
+    private readonly configService: ConfigService,
+  ) {
     super(WorkerAlarmMessageEntity, dataSource.createEntityManager());
   }
 
@@ -184,4 +188,47 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
 
     return result;
   }
+
+  /**
+   * 재전송 타겟을 가져온다.
+   */
+  async findByResendTarget() {
+    const resendTimer = this.configService.get('notification.resendTimer');
+    this.logger.log(`RESEND SECOND TARGET >> ${resendTimer}`);
+
+    const query = this.createQueryBuilder('tam')
+      .select([
+        'tam.id',
+        'ah.alertLevel',
+        'ah.alertType',
+        'ah.alertTitle',
+        'ah.alertContent',
+        'ah.entranceType',
+        'ah.lTime',
+        'tam.readAt',
+        'tam.sendAt',
+        'tc.courseID',
+        'tc.courseName',
+        'worker.mobileToken',
+        'worker.watchToken',
+      ])
+      .innerJoin('tam.alertHistory', 'ah')
+      .innerJoin('tam.worker', 'worker')
+      .innerJoin('ah.course', 'tc')
+      .where('UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(tam.sendAt) >= :time', {
+        time: resendTimer,
+      });
+
+    return await query.getMany();
+  }
+
+  /**
+   * 전송 데이터를 입력한다.
+   */
+  async insertWorkerAlarmMessage() {}
+
+  /**
+   * 전송한 결과 값을 입력한다.
+   */
+  async updateResult() {}
 }

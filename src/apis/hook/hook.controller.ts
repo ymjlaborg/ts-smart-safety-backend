@@ -51,7 +51,7 @@ export class HookController {
   @Post('nodedata')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('xapikey'))
-  async nodedata(@Body() data: NodeDataDto[]) {
-    console.log(data);
+  async nodedata(@Body() nodedatas: NodeDataDto[]) {
+    await this.hookService.sendNodedatas(nodedatas);
   }
 }
