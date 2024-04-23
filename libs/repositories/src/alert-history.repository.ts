@@ -1,9 +1,9 @@
 import { AlertHistoryEntity } from '@app/entities';
 import { Injectable } from '@nestjs/common';
-import { Between, DataSource, Repository } from 'typeorm';
+import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
 import { NodeRepository } from './node.repository';
-import { ListAlertDto } from 'src/apis/control/alert/dto/list-alert.dto';
 import * as dayjs from 'dayjs';
+import { ListAlertDto } from 'src/apis/control/common/dto/list-alert.dto';
 
 @Injectable()
 export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
@@ -54,10 +54,15 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
    *
    * @returns
    */
-  async countAll() {
-    const query = this.createQueryBuilder('a').innerJoin('a.course', 'c');
+  async countAll(officeID: number, params: ListAlertDto) {
+    const query = this.createQueryBuilder('ah').innerJoin('ah.course', 'c');
+    this.generateAllQuery(query, officeID, params);
+    const count = await query.getCount();
+    console.log('COUNT ALL');
 
-    return await query.getCount();
+    console.log(count);
+
+    return count;
   }
 
   /**
@@ -68,6 +73,7 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
     const query = this.createQueryBuilder('ah')
       .select([
         'ah.id',
+        'ah.lTime',
         'ah.alertLevel',
         'ah.alertTitle',
         'ah.alertContent',
@@ -77,11 +83,36 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
       ])
       .innerJoin('ah.course', 'c');
 
-    query.where('c.officeID = :officeID', { officeID });
+    console.log('FIND ALL');
 
+    this.generateAllQuery(query, officeID, params);
+
+    query.skip(params.offset);
+    query.take(params.limit);
+
+    query.orderBy('ah.lTime', 'DESC');
+
+    return await query.getMany();
+  }
+
+  /**
+   *
+   * @param query
+   * @param officeID
+   * @param params
+   */
+  private generateAllQuery(
+    query: SelectQueryBuilder<AlertHistoryEntity>,
+    officeID: number,
+    params: ListAlertDto,
+  ) {
+    query.where('c.officeID = :officeID', { officeID });
     // 레벨 전달
     if (params.levels) {
+      console.log(params.levels);
+
       if (params.levels instanceof Array) {
+        console.log('qweqwe');
         query.andWhere('ah.alertLevel IN (:...levels)', {
           levels: params.levels,
         });
@@ -92,7 +123,9 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
 
     // 코스 전달
     if (params.courses) {
-      if (params.levels instanceof Array) {
+      console.log(params.courses);
+
+      if (params.courses instanceof Array) {
         query.andWhere('c.courseID IN (:...courses)', {
           courses: params.courses,
         });
@@ -112,14 +145,9 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
       .second(59)
       .format('YYYY-MM-DD HH:mm:ss');
 
-    query.andWhere({ lTime: Between(startDate, endDate) });
-
-    query.limit(params.limit);
-    query.take(params.offset);
-
-    query.orderBy('ah.lTime', 'DESC');
-    query.addOrderBy('ah.id', 'DESC');
-
-    return await query.getMany();
+    query.andWhere('ah.lTime BETWEEN :startDate AND :endDate', {
+      startDate,
+      endDate,
+    });
   }
 }

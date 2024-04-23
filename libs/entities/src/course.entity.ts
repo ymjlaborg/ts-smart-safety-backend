@@ -12,6 +12,7 @@ import {
 import { OfficeEntity } from './office.entity';
 import { WorkerEntity } from './worker.entity';
 import { AlertHistoryEntity } from './alert-history.entity';
+import { NodeCourseEntity } from './node-course.entity';
 
 @Entity({
   name: 'TBLcourse',
@@ -71,4 +72,7 @@ export class CourseEntity {
     (alertHistoryEntity) => alertHistoryEntity.course,
   )
   alertHistories: AlertHistoryEntity[];
+
+  @OneToMany(() => NodeCourseEntity, (nodeCourse) => nodeCourse.course)
+  nodeCourses: NodeCourseEntity[];
 }

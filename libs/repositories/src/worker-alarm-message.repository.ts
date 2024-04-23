@@ -54,8 +54,8 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       }
     }
 
-    query.limit(listDto.limit);
-    query.take(listDto.offset);
+    query.skip(listDto.offset);
+    query.take(listDto.limit);
 
     let sort: string;
 

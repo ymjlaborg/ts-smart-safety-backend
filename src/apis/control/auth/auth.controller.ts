@@ -29,6 +29,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({
+    summary: '통합 관제 로그인',
     description: '통합 관제 로그인',
   })
   @Post('signin')
@@ -38,6 +39,7 @@ export class AuthController {
   }
 
   @ApiOperation({
+    summary: '통합 관제 인증키 업데이트',
     description: '통합 관제 인증키 업데이트',
   })
   @ApiBearerAuth('refreshToken')

@@ -79,7 +79,7 @@ export enum TokenType {
 }
 
 export enum EventName {
-  WaitingFire = 'waiting.fire',
-  ControlAlarm = 'control.alarm',
+  ControlAlert = 'control.alert',
   WorkerPush = 'worker.push',
+  FireAlert = 'fire.alert',
 }

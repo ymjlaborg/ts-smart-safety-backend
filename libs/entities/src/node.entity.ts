@@ -1,5 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { AlertHistoryEntity } from './alert-history.entity';
+import { CameraEntity } from './camera.entity';
+import { NodeCourseEntity } from './node-course.entity';
 
 @Entity({
   name: 'TBLnode',
@@ -86,4 +88,10 @@ export class NodeEntity {
     (alertHistoryEntity) => alertHistoryEntity.node,
   )
   alertHistories: AlertHistoryEntity[];
+
+  @OneToMany(() => CameraEntity, (cameraEntity) => cameraEntity.node)
+  cameras: CameraEntity[];
+
+  @OneToMany(() => NodeCourseEntity, (nodeCourse) => nodeCourse.node)
+  nodeCourses: NodeCourseEntity[];
 }

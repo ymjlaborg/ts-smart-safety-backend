@@ -6,3 +6,5 @@ export * from './alert-history.entity';
 export * from './worker-alarm-message.entity';
 export * from './nodedata.entity';
 export * from './node.entity';
+export * from './camera.entity';
+export * from './node-course.entity';

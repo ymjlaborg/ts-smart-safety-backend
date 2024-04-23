@@ -7,3 +7,4 @@ export * from './repositories.module';
 export * from './nodedata.repository';
 export * from './alert-history.repository';
 export * from './node.repository';
+export * from './camera.repository';

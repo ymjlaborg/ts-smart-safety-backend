@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
-import { CameraModule } from './camera/camera.module';
-import { AlertModule } from './alert/alert.module';
+import { CommonModule } from './common/common.module';
 @Module({
-  imports: [AuthModule, CameraModule, AlertModule],
+  imports: [AuthModule, CommonModule],
 })
 export class ControlModule {}

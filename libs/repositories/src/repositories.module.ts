@@ -7,6 +7,7 @@ import { WorkerAlarmMessageRepository } from './worker-alarm-message.repository'
 import { NodedataRepository } from './nodedata.repository';
 import { AlertHistoryRepository } from './alert-history.repository';
 import { NodeRepository } from './node.repository';
+import { CameraRepository } from './camera.repository';
 
 @Module({
   providers: [
@@ -18,6 +19,7 @@ import { NodeRepository } from './node.repository';
     WorkerAlarmMessageRepository,
     NodedataRepository,
     NodeRepository,
+    CameraRepository,
   ],
   exports: [
     OfficeRepository,
@@ -28,6 +30,7 @@ import { NodeRepository } from './node.repository';
     WorkerAlarmMessageRepository,
     NodedataRepository,
     NodeRepository,
+    CameraRepository,
   ],
 })
 export class RepositoriesModule {}
