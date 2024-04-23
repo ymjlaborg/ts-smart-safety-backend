@@ -177,8 +177,6 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       .groupBy('a.alertLevel')
       .getRawMany();
 
-    console.log(result);
-
     return result;
   }
 }
