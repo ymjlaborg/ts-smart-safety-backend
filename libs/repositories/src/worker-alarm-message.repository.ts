@@ -1,10 +1,12 @@
 import { WorkerAlarmMessageEntity } from '@app/entities';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ListAlertDto } from 'src/apis/worker/alert/dto/list-alert.dto';
 import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageEntity> {
+  private readonly logger: Logger = new Logger(WorkerAlarmMessageEntity.name);
+
   constructor(private dataSource: DataSource) {
     super(WorkerAlarmMessageEntity, dataSource.createEntityManager());
   }
@@ -49,6 +51,7 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
         'ah.alertTitle',
         'ah.alertContent',
         'ah.entranceType',
+        'ah.lTime',
         'tam.readAt',
         'tam.sendAt',
         'tc.courseID',
@@ -88,6 +91,8 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
     } else {
       query.orderBy(sort, 'DESC');
     }
+
+    this.logger.log(`ORDER BY ${sort} / ${listDto.order || 'DESC'}`);
 
     return await query.getMany();
   }

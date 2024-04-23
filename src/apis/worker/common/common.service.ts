@@ -1,13 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
   CourseRepository,
-  NodedataRepository,
   OfficeRepository,
   WorkerRepository,
 } from '@app/repositories';
 import { In } from 'typeorm';
 import { OnEvent } from '@nestjs/event-emitter';
 import { EventName } from '@app/enum';
+import { RedisService } from '@app/redis';
 
 @Injectable()
 export class CommonService {
@@ -17,7 +17,7 @@ export class CommonService {
     private readonly officeRepository: OfficeRepository,
     private readonly workerRepository: WorkerRepository,
     private readonly courseRepository: CourseRepository,
-    private readonly nodedataRepository: NodedataRepository,
+    private readonly redisService: RedisService,
   ) {}
 
   /**
@@ -80,12 +80,8 @@ export class CommonService {
    * @param worker
    */
   async dashboard(workerId: number) {
-    console.log(workerId);
-    await this.nodedataRepository.findOne({
-      where: {
-        lTime: new Date(),
-      },
-    });
+    const courses = await this.coursesByWorker(workerId);
+    console.log(courses);
   }
 
   @OnEvent(EventName.WorkerPush)
