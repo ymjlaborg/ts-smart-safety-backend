@@ -12,7 +12,7 @@ export class AlarmService {
     return this.alarmSubject.asObservable();
   }
 
-  @OnEvent(EventName.WaitingFire)
+  @OnEvent(EventName.FireAlert)
   handleFireAlarm(event) {
     this.alarmSubject.next(event);
   }

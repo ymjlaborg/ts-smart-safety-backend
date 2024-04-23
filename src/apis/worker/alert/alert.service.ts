@@ -30,6 +30,7 @@ export class AlertService {
     });
 
     const totalPage: number = Math.ceil(totalCount / listDto.limit);
+    const readAt = await this.workerAlarmMessageRepository.readAtByWorkerId(id);
 
     return {
       list,
@@ -38,6 +39,7 @@ export class AlertService {
         totalPage,
         currentPage: listDto.page,
       },
+      readAt,
     };
   }
 

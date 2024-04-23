@@ -9,6 +9,12 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
     super(WorkerAlarmMessageEntity, dataSource.createEntityManager());
   }
 
+  /**
+   * 작업자가 가지고 있는 알림의 수
+   * @param workerID
+   * @param listDto
+   * @returns
+   */
   async countAllByWorker(workerID: number, listDto: ListAlertDto) {
     const query = this.createQueryBuilder('tam')
       .innerJoin('tam.alertHistory', 'ah')
@@ -27,6 +33,13 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
     return await query.getCount();
   }
 
+  /**
+   * 작업자의 전체 알림 항목을 가져온다.
+   *
+   * @param workerID
+   * @param listDto
+   * @returns
+   */
   async findAllByWorker(workerID: number, listDto: ListAlertDto) {
     const query = this.createQueryBuilder('tam')
       .select([
@@ -147,5 +160,25 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
     return await this.existsBy({
       id,
     });
+  }
+
+  /**
+   * 전체 항목을 읽었는지 여부 확인
+   *
+   * @param workerId
+   * @returns
+   */
+  async readAtByWorkerId(workerId: number) {
+    const result = await this.createQueryBuilder('wam')
+      .innerJoin('wam.alertHistory', 'a')
+      .select('a.alertLevel', 'alertLevel')
+      .addSelect('COUNT(wam.readAt) > 0', 'count')
+      .where('wam.workerID = :workerId', { workerId })
+      .groupBy('a.alertLevel')
+      .getRawMany();
+
+    console.log(result);
+
+    return result;
   }
 }
