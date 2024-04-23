@@ -15,6 +15,7 @@ import { AlertDto } from './dto/alert.dto';
 import { TransformInterceptor } from '@app/interceptors';
 import { HttpExceptionFilter } from '@app/filters';
 import { AuthGuard } from '@nestjs/passport';
+import { NodeDataDto } from './dto/node-data.dto';
 
 @ApiTags('메시지 전달')
 @Controller('hook')
@@ -25,6 +26,7 @@ export class HookController {
   constructor(private readonly hookService: HookService) {}
 
   @ApiOperation({
+    summary: '알림 전달',
     description: '알림 전달',
   })
   @ApiHeader({
@@ -35,9 +37,13 @@ export class HookController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('xapikey'))
   async alert(@Body() alertDto: AlertDto) {
-    await this.hookService.sendAlarm(alertDto.alertId);
+    await this.hookService.sendAlert(alertDto.alertId);
   }
 
+  @ApiOperation({
+    summary: '노드 데이터 전달',
+    description: '노드 데이터 전달',
+  })
   @ApiHeader({
     name: 'x-api-key',
     description: '접근 인증 키',
@@ -45,5 +51,7 @@ export class HookController {
   @Post('nodedata')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('xapikey'))
-  async nodedata() {}
+  async nodedata(@Body() data: NodeDataDto[]) {
+    console.log(data);
+  }
 }

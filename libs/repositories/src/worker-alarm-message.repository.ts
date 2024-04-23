@@ -32,6 +32,7 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       .select([
         'tam.id',
         'ah.alertLevel',
+        'ah.alertType',
         'ah.alertTitle',
         'ah.alertContent',
         'ah.entranceType',
@@ -100,6 +101,7 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       .select([
         'tam.id',
         'ah.alertLevel',
+        'ah.alertType',
         'ah.alertTitle',
         'ah.alertContent',
         'ah.entranceType',

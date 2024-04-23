@@ -19,17 +19,17 @@ export class HookService {
 
   /**
    * 알림 전달
-   * @param alarmId
+   * @param alertId
    */
-  async sendAlarm(alarmId: number) {
-    const result = await this.alertHistoryRepository.findById(alarmId);
+  async sendAlert(alertId: number) {
+    const result = await this.alertHistoryRepository.findById(alertId);
 
     if (result) {
       if (result.alertType === AlertType.Fire) {
-        this.eventEmitter.emit(EventName.WaitingFire, result);
+        this.eventEmitter.emit(EventName.FireAlert, result);
       }
 
-      this.eventEmitter.emit(EventName.ControlAlarm, result);
+      this.eventEmitter.emit(EventName.ControlAlert, result);
       this.eventEmitter.emit(EventName.WorkerPush, result);
     }
   }
