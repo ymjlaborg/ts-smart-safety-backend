@@ -16,4 +16,8 @@ export const validationSchema = joi.object({
   AUTH_X_API_KEY: joi.string().required(),
   AUTH_X_API_SECRET_KEY: joi.string().required(),
   AUTH_X_API_IV: joi.string().required(),
+  REDIS_HOST: joi.string().required(),
+  REDIS_PORT: joi.number().required(),
+  REDIS_USE_PASSWORD: joi.boolean().required(),
+  REDIS_PASSWORD: joi.string(),
 });

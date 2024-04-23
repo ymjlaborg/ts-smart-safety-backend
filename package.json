@@ -39,6 +39,7 @@
     "crypto": "^1.0.1",
     "dayjs": "^1.11.10",
     "form-data": "^4.0.0",
+    "ioredis": "^5.4.1",
     "joi": "^17.12.3",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
@@ -108,7 +109,8 @@
       "^@app/interceptors(|/.*)$": "<rootDir>/libs/interceptors/src/$1",
       "^@app/filters(|/.*)$": "<rootDir>/libs/filters/src/$1",
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
-      "^@app/strategy(|/.*)$": "<rootDir>/libs/strategy/src/$1"
+      "^@app/strategy(|/.*)$": "<rootDir>/libs/strategy/src/$1",
+      "^@app/redis(|/.*)$": "<rootDir>/libs/redis/src/$1"
     }
   }
 }

@@ -30,6 +30,8 @@
     "@app/common/(.*)": "<rootDir>/../libs/common/src/$1",
     "@app/common": "<rootDir>/../libs/common/src",
     "@app/strategy/(.*)": "<rootDir>/../libs/strategy/src/$1",
-    "@app/strategy": "<rootDir>/../libs/strategy/src"
+    "@app/strategy": "<rootDir>/../libs/strategy/src",
+    "@app/redis/(.*)": "<rootDir>/../libs/redis/src/$1",
+    "@app/redis": "<rootDir>/../libs/redis/src"
   }
 }
