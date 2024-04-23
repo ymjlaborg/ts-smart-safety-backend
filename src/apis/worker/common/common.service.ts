@@ -1,12 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
   CourseRepository,
+  NodeRepository,
   OfficeRepository,
   WorkerRepository,
 } from '@app/repositories';
 import { In } from 'typeorm';
-import { OnEvent } from '@nestjs/event-emitter';
-import { EventName } from '@app/enum';
 import { RedisService } from '@app/redis';
 
 @Injectable()
@@ -17,6 +16,7 @@ export class CommonService {
     private readonly officeRepository: OfficeRepository,
     private readonly workerRepository: WorkerRepository,
     private readonly courseRepository: CourseRepository,
+    private readonly nodeRepository: NodeRepository,
     private readonly redisService: RedisService,
   ) {}
 
@@ -66,6 +66,11 @@ export class CommonService {
       },
       relations: ['courses'],
       select: ['courses'],
+      order: {
+        courses: {
+          courseID: 'ASC',
+        },
+      },
     });
 
     return result.courses.map((course) => ({
@@ -79,17 +84,57 @@ export class CommonService {
    *
    * @param worker
    */
-  async dashboard(workerId: number) {
-    const courses = await this.coursesByWorker(workerId);
-    console.log(courses);
-  }
+  async dashboard(workerID: number) {
+    const courses = await this.coursesByWorker(workerID);
+    let courseID: number;
+    if (!courses.length) {
+      const worker = await this.workerRepository.findOne({
+        where: {
+          id: workerID,
+        },
+        select: ['officeID'],
+      });
 
-  @OnEvent(EventName.WorkerPush)
-  workerPush(event) {
-    console.log(event);
-    // 진로 파악
-    // 진로 파악하여 이벤트 발송 대상 저장
-    // 발송 -> DB 저장
-    // 전달 객체 확인
+      const courses = await this.courseRepository.findByOfficeID(
+        worker.officeID,
+      );
+      courseID = courses[0].courseID;
+    } else {
+      courseID = courses[0].courseID;
+    }
+
+    const nodeNames = ['Temperature', 'Humidity', 'PM10'];
+    const nodes = await this.nodeRepository.findByCourseIDAndNodeNames(
+      courseID,
+      nodeNames,
+    );
+
+    const promises = nodes.map(async (node, index) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const result = await this.redisService.get(
+            `wownode:${node.devID}:${node.nodeName}`,
+          );
+
+          resolve({
+            [nodeNames[index].toLowerCase()]: JSON.parse(result).value,
+          });
+        } catch (e) {
+          reject();
+        }
+      });
+    });
+
+    const results = (await Promise.all(promises)).reduce(
+      (prev: object, value: object) => {
+        return {
+          ...prev,
+          ...value,
+        };
+      },
+      {},
+    );
+
+    return results;
   }
 }

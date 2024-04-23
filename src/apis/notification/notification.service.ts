@@ -18,7 +18,7 @@ export class NotificationService {
     private readonly workerAlarmMessageRepository: WorkerAlarmMessageRepository,
   ) {}
 
-  @Cron(CronExpression.EVERY_SECOND)
+  // @Cron(CronExpression.EVERY_SECOND)
   async handleResendNotification() {
     this.logger.log(`RUN RESEND NOTIFICATION`);
     // 재전송 타겟을 가져온다.
