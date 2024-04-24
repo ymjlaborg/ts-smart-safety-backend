@@ -20,6 +20,7 @@ export const validationSchema = joi.object({
   REDIS_PORT: joi.number().required(),
   REDIS_USE_PASSWORD: joi.boolean().required(),
   REDIS_PASSWORD: joi.string(),
+  NOTIFICATION_USE_RESEND: joi.boolean().required(),
   NOTIFICATION_RESEND_TIMER: joi.number().required(),
   NOTIFICATION_ACCOUNT_PATH: joi.string().required(),
 });

@@ -209,6 +209,7 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
         'tam.sendAt',
         'tc.courseID',
         'tc.courseName',
+        'tam.workerID',
         'worker.mobileToken',
         'worker.watchToken',
       ])
@@ -217,7 +218,8 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       .innerJoin('ah.course', 'tc')
       .where('UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(tam.sendAt) >= :time', {
         time: resendTimer,
-      });
+      })
+      .andWhere('tam.readAt IS NULL');
 
     return await query.getMany();
   }

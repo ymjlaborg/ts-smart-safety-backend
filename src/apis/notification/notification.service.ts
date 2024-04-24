@@ -50,8 +50,56 @@ export class NotificationService {
       return;
     }
 
-    console.log(targets);
+    this.logger.log(`RESEND TARGET COUNT = ${targets.length}`);
 
+    const sendPromises = targets.map(async (target) => {
+      const data: Record<string, string> = {
+        alertID: target.id.toString(),
+        alertLevel: target.alertHistory.alertLevel.toString(),
+        alertType: target.alertHistory.alertType.toString(),
+        alertDataValue: target.alertHistory.alertDataValue || '',
+        alertTitle: target.alertHistory.alertTitle,
+        alertContent: target.alertHistory.alertContent,
+        entranceType:
+          target.alertHistory.entranceType === null
+            ? ''
+            : target.alertHistory.entranceType.toString(),
+        course: JSON.stringify({
+          courseID: target.alertHistory.course.courseID,
+          courseName: target.alertHistory.course.courseName,
+        }),
+      };
+
+      const t = {
+        id: target.id,
+        workerID: target.workerID,
+        mobileToken: target.worker.mobileToken,
+        watchToken: target.worker.watchToken,
+      };
+
+      return await this.sendNotificationChunks([t], data);
+    });
+
+    const sendResults = await Promise.all(sendPromises);
+
+    sendResults.forEach(async (result) => {
+      const { id, workerID, messageID, deliveryStatus, sendAt } = result[0];
+      const { sendCount } = await this.workerAlarmMessageRepository.findOne({
+        where: {
+          id,
+        },
+        select: ['sendCount'],
+      });
+
+      await this.workerAlarmMessageRepository.save({
+        id,
+        workerID,
+        messageID,
+        deliveryStatus,
+        sendAt,
+        sendCount: sendCount + 1,
+      });
+    });
     // 타겟 정보를 가져온다.
   }
 

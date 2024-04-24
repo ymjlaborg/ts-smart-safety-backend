@@ -72,9 +72,9 @@ export class WorkerAlarmMessageEntity {
     name: 'SendCount',
     type: 'int',
     default: 1,
-    comment: '최종 전달 시간',
+    comment: '전송 카운트',
   })
-  sendCount: Date;
+  sendCount: number;
 
   @ManyToOne(
     () => AlertHistoryEntity,
