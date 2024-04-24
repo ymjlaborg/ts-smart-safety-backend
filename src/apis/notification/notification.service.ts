@@ -37,7 +37,7 @@ export class NotificationService {
   }
 
   @Cron(CronExpression.EVERY_SECOND, {
-    disabled: true,
+    disabled: false,
   })
   async handleResendNotification() {
     this.logger.log(`RUN RESEND NOTIFICATION`);
