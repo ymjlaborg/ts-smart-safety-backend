@@ -48,6 +48,8 @@ export class CourseRepository extends Repository<CourseEntity> {
         'tc.streamingUrl',
       ]);
 
+    console.log(officeID);
+
     if (useWaitingRoom) {
       query.andWhere('tc.useWaitingRoom = :Yn', { Yn: Yn.Y });
     }

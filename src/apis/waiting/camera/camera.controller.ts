@@ -34,7 +34,7 @@ export class CameraController {
   @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
   async find(@Req() req: Request) {
-    const userId: number = req.body as number;
+    const userId: number = req.user as number;
     return await this.cameraService.find(userId);
   }
 }

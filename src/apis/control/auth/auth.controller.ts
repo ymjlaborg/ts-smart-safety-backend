@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Logger,
@@ -61,5 +60,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async signout(@Req() req: Request) {
     const id: number = req.user as number;
+    return await this.authService.signout(id);
   }
 }
