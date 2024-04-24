@@ -10,12 +10,17 @@ import { Request } from 'express';
 import { Strategy } from 'passport-custom';
 import * as jwt from 'jsonwebtoken';
 import { CustomException } from '@app/common';
+import { TokenService } from 'src/apis/Token/token.service';
+import { TokenServiceName, TokenType } from '@app/enum';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
   private readonly logger: Logger = new Logger(JwtRefreshStrategy.name);
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private tokenService: TokenService,
+  ) {
     super();
   }
 
@@ -34,8 +39,22 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
 
       const secretOrKey = this.configService.get<string>('auth.refreshKey');
       const payload = jwt.verify(refreshToken, secretOrKey);
+      const id = payload['id'];
+      const serviceName = req.url.slice(1).split('/')[2];
+
+      const result = await this.tokenService.findByTarget(
+        serviceName as TokenServiceName,
+        id,
+        TokenType.Refresh,
+      );
+
+      if (!result.data) {
+        this.logger.error('Not Found Token From DB!!');
+        throw new BadRequestException();
+      }
+
       return {
-        id: payload['id'],
+        id,
         refreshToken,
       };
     } catch (e) {

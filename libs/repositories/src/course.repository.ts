@@ -1,4 +1,5 @@
 import { CourseEntity } from '@app/entities';
+import { Yn } from '@app/enum';
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 
@@ -27,7 +28,10 @@ export class CourseRepository extends Repository<CourseEntity> {
    * @param officeID
    * @returns
    */
-  async findCamerasByOfficeID(officeID: number) {
+  async findCamerasByOfficeID(
+    officeID: number,
+    useWaitingRoom: boolean = false,
+  ) {
     const query = this.createQueryBuilder('c')
       .innerJoin('c.nodeCourses', 'nc')
       .innerJoin('nc.node', 'n')
@@ -43,6 +47,10 @@ export class CourseRepository extends Repository<CourseEntity> {
         'tc.useWaitingRoom',
         'tc.streamingUrl',
       ]);
+
+    if (useWaitingRoom) {
+      query.andWhere('tc.useWaitingRoom = :Yn', { Yn: Yn.Y });
+    }
 
     return (await query.getMany()).map((course) => {
       const { courseID, courseName, nodeCourses } = course;

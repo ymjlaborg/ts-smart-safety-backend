@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Logger,
@@ -43,7 +42,7 @@ export class AuthController {
     description: '대기실 인증 토큰 업데이트',
   })
   @ApiBearerAuth('refreshToken')
-  @Get('refresh')
+  @Post('refresh')
   @UseGuards(AuthGuard('refresh'))
   @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request) {

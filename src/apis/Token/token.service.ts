@@ -68,6 +68,22 @@ export class TokenService {
     };
   }
 
+  async findByTarget(
+    serviceName: TokenServiceName,
+    targetID: number,
+    tokenType: TokenType,
+  ) {
+    const data = await this.tokenRepository.findByTarget(
+      serviceName,
+      targetID,
+      tokenType,
+    );
+
+    return {
+      data,
+    };
+  }
+
   /**
    * 접근 토큰을 생성하여 전달한다.
    *

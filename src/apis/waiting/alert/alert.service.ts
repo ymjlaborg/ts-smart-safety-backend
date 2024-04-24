@@ -9,6 +9,7 @@ import { EventName } from '@app/enum';
 export class AlertService {
   private readonly logger: Logger = new Logger(AlertService.name);
   private fireSubject = new Subject<AlertHistoryEntity>();
+  private nodedataSubject = new Subject<any>();
 
   constructor() {}
 
@@ -24,5 +25,15 @@ export class AlertService {
    */
   getFireStream() {
     return this.fireSubject.asObservable();
+  }
+
+  @OnEvent(EventName.NodeData)
+  handleNodedata() {
+    this.logger.log('Nodedata!!!');
+    this.nodedataSubject.next({});
+  }
+
+  getNodedataStream() {
+    return this.nodedataSubject.asObservable();
   }
 }

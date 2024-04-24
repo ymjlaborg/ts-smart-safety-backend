@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Logger,
-  Param,
   Req,
   UseFilters,
   UseGuards,
@@ -27,15 +26,15 @@ export class CameraController {
   constructor(private readonly cameraService: CameraService) {}
 
   @ApiOperation({
-    summary: '진로별 카메라 정보',
-    description: '진로별 카메라 정보를 가져온다.',
+    summary: '카메라 정보',
+    description: '카메라 정보를 가져온다.',
   })
   @ApiBearerAuth('accessToken')
-  @Get(':courseId')
+  @Get()
   @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
-  async find(@Req() req: Request, @Param('courseId') courseId: number) {
+  async find(@Req() req: Request) {
     const userId: number = req.body as number;
-    this.logger.log(userId, courseId);
+    return await this.cameraService.find(userId);
   }
 }

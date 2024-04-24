@@ -10,12 +10,17 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { Strategy } from 'passport-custom';
 import * as jwt from 'jsonwebtoken';
+import { TokenService } from 'src/apis/Token/token.service';
+import { TokenServiceName, TokenType } from '@app/enum';
 
 @Injectable()
 export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
   private readonly logger: Logger = new Logger(JwtAccessStrategy.name);
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private tokenService: TokenService,
+  ) {
     super();
   }
 
@@ -40,9 +45,22 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
 
       const secretOrKey = this.configService.get<string>('auth.accessKey');
       const payload = jwt.verify(accessToken, secretOrKey);
-      return payload['id'];
+      const id = payload['id'];
+      const serviceName = req.url.slice(1).split('/')[2];
+
+      const result = await this.tokenService.findByTarget(
+        serviceName as TokenServiceName,
+        id,
+        TokenType.Access,
+      );
+
+      if (!result.data) {
+        this.logger.error('Not Found Token From DB!!');
+        throw new BadRequestException();
+      }
+
+      return id;
     } catch (e) {
-      console.log(e);
       if (e instanceof BadRequestException) {
         throw new CustomException(
           'AUTH_NO_ACCESS_TOKEN',

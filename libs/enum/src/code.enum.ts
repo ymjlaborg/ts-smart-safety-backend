@@ -82,4 +82,5 @@ export enum EventName {
   ControlAlert = 'control.alert',
   WorkerPush = 'worker.push',
   FireAlert = 'fire.alert',
+  NodeData = 'all.nodedata',
 }

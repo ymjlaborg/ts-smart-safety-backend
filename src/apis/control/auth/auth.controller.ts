@@ -50,4 +50,16 @@ export class AuthController {
     const id: number = req.user as number;
     return await this.authService.refresh(id);
   }
+
+  @ApiOperation({
+    summary: '로그아웃',
+    description: '로그아웃 처리',
+  })
+  @ApiBearerAuth('accessToken')
+  @Post('signout')
+  @UseGuards(AuthGuard('access'))
+  @HttpCode(HttpStatus.OK)
+  async signout(@Req() req: Request) {
+    const id: number = req.user as number;
+  }
 }
