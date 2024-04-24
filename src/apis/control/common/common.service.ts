@@ -52,7 +52,7 @@ export class CommonService {
    * @returns
    */
   async getCamerasByUserId(userId: number) {
-    return await this.cameraRepository.findAllByOfficeID(userId);
+    return await this.courseRepository.findCamerasByOfficeID(userId);
   }
 
   /**

@@ -50,6 +50,8 @@ export class NotificationService {
       return;
     }
 
+    console.log(targets);
+
     // 타겟 정보를 가져온다.
   }
 
@@ -130,6 +132,13 @@ export class NotificationService {
     return result;
   }
 
+  /**
+   * 메시지 발송
+   *
+   * @param targets
+   * @param data
+   * @returns
+   */
   private async sendNotification(
     targets: Record<string, string | number>[],
     data: Record<string, string>,
@@ -138,11 +147,19 @@ export class NotificationService {
     const watchTokens = targets.map((target) => target.watchToken);
 
     const mobileMessages: admin.messaging.MulticastMessage = {
+      notification: {
+        title: data.alertTitle,
+        body: data.alertContent,
+      },
       data,
       tokens: mobileTokens as string[],
     };
     const watchMessages: admin.messaging.MulticastMessage = {
       data,
+      notification: {
+        title: data.alertTitle,
+        body: data.alertContent,
+      },
       tokens: watchTokens as string[],
     };
 

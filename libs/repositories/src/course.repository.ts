@@ -21,4 +21,46 @@ export class CourseRepository extends Repository<CourseEntity> {
 
     return await query.getMany();
   }
+
+  /**
+   * 진로별 카메라 정보 가져오기
+   * @param officeID
+   * @returns
+   */
+  async findCamerasByOfficeID(officeID: number) {
+    const query = this.createQueryBuilder('c')
+      .innerJoin('c.nodeCourses', 'nc')
+      .innerJoin('nc.node', 'n')
+      .innerJoin('n.cameras', 'tc')
+      .where('c.officeID = :officeID', { officeID })
+      .select([
+        'c.courseID',
+        'c.courseName',
+        'nc.courseID',
+        'nc.entranceType',
+        'n.nodeName',
+        'tc.id',
+        'tc.useWaitingRoom',
+        'tc.streamingUrl',
+      ]);
+
+    return (await query.getMany()).map((course) => {
+      const { courseID, courseName, nodeCourses } = course;
+
+      const camera = nodeCourses.map((nodeCourse) => {
+        const { entranceType, node } = nodeCourse;
+        return {
+          entranceType,
+          ...node.cameras[0],
+          nodeName: node.nodeName,
+        };
+      });
+
+      return {
+        courseID,
+        courseName,
+        camera,
+      };
+    });
+  }
 }
