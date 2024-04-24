@@ -116,13 +116,15 @@ export class WorkerRepository extends Repository<WorkerEntity> {
   }
 
   /**
-   * 검사소 아이디로 검사소에 속한 작업자들을 불러온다.
+   *  작업 진로 아이디로 작업자를 가져온다.
    *
-   * @param officeID
+   * @param courseID
    */
-  async findAllByOfficeID(officeID: number) {
+  async findAllCourseID(courseID: number) {
     return await this.findBy({
-      officeID,
+      courses: {
+        courseID,
+      },
       workerStatus: WorkerStatus.Use,
       mobileToken: Not(IsNull()),
       watchToken: Not(IsNull()),
