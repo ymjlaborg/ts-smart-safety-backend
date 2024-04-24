@@ -76,7 +76,7 @@ export class CommonController {
   @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
   pushAlerts(): Observable<any> {
-    return this.commonService.getAlertStream().pipe(map(() => ({})));
+    return this.commonService.getAlertStream().pipe(map((value) => value));
   }
 
   @ApiOperation({

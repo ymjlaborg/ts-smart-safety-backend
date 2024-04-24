@@ -13,7 +13,7 @@ import { AlertHistoryEntity } from '@app/entities';
 @Injectable()
 export class CommonService {
   private readonly logger: Logger = new Logger(CommonService.name);
-  private alertSubject = new Subject<any>();
+  private alertSubject = new Subject<AlertHistoryEntity>();
   private fireSubject = new Subject<AlertHistoryEntity>();
   private deviceSubject = new Subject<any>();
 
@@ -65,7 +65,10 @@ export class CommonService {
   }
 
   @OnEvent(EventName.ControlAlert)
-  handleAlert() {}
+  handleAlert(alertHistory: AlertHistoryEntity) {
+    this.logger.log('ALERT SEND!');
+    this.alertSubject.next(alertHistory);
+  }
 
   getAlertStream() {
     return this.alertSubject.asObservable();
