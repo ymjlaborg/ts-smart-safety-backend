@@ -4,17 +4,18 @@ import {
   WorkerAlarmMessageRepository,
   WorkerRepository,
 } from '@app/repositories';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { OnEvent } from '@nestjs/event-emitter';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 import * as admin from 'firebase-admin';
 import { ServiceAccount } from 'firebase-admin';
 import { SendResponse } from 'firebase-admin/lib/messaging/messaging-api';
 import * as fs from 'fs';
+import { CronJob } from 'cron';
 
 @Injectable()
-export class NotificationService {
+export class NotificationService implements OnModuleInit {
   private readonly logger: Logger = new Logger(NotificationService.name);
   private readonly fcm: admin.messaging.Messaging;
 
@@ -22,6 +23,7 @@ export class NotificationService {
     private readonly workerRepository: WorkerRepository,
     private readonly workerAlarmMessageRepository: WorkerAlarmMessageRepository,
     private readonly configService: ConfigService,
+    private readonly schedulerRegistry: SchedulerRegistry,
   ) {
     const serviceAccountKey = this.configService.get<string>(
       'notification.serviceAccountKey',
@@ -36,9 +38,24 @@ export class NotificationService {
     this.fcm = admin.messaging();
   }
 
-  @Cron(CronExpression.EVERY_SECOND, {
-    disabled: false,
-  })
+  onModuleInit() {
+    const useResend = this.configService.get<boolean>('notification.useResend');
+    this.logger.debug(`MODULE INIT!! => ${useResend}`);
+
+    const job = new CronJob(CronExpression.EVERY_SECOND, async () => {
+      await this.handleResendNotification();
+    });
+
+    this.schedulerRegistry.addCronJob('resend-notification', job);
+    if (useResend === true) {
+      this.logger.debug('USE RESEND!');
+      job.start();
+    } else {
+      this.logger.debug('NOT USE RESEND!');
+      job.stop();
+    }
+  }
+
   async handleResendNotification() {
     this.logger.log(`RUN RESEND NOTIFICATION`);
     // 재전송 타겟을 가져온다.
