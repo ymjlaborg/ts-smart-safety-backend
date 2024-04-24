@@ -39,7 +39,9 @@ export class NotificationService implements OnModuleInit {
   }
 
   onModuleInit() {
-    const useResend = this.configService.get<boolean>('notification.useResend');
+    const useResend = JSON.parse(
+      this.configService.get('notification.useResend'),
+    );
     this.logger.debug(`MODULE INIT!! => ${useResend}`);
 
     const job = new CronJob(CronExpression.EVERY_SECOND, async () => {
@@ -47,7 +49,7 @@ export class NotificationService implements OnModuleInit {
     });
 
     this.schedulerRegistry.addCronJob('resend-notification', job);
-    if (useResend === true) {
+    if (useResend) {
       this.logger.debug('USE RESEND!');
       job.start();
     } else {
