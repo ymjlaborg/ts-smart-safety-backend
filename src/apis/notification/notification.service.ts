@@ -1,7 +1,6 @@
 import { AlertHistoryEntity, WorkerEntity } from '@app/entities';
 import { EventName } from '@app/enum';
 import {
-  AlertHistoryRepository,
   WorkerAlarmMessageRepository,
   WorkerRepository,
 } from '@app/repositories';
@@ -21,7 +20,6 @@ export class NotificationService {
 
   constructor(
     private readonly workerRepository: WorkerRepository,
-    private readonly alertHistoryRepository: AlertHistoryRepository,
     private readonly workerAlarmMessageRepository: WorkerAlarmMessageRepository,
     private readonly configService: ConfigService,
   ) {
@@ -38,7 +36,9 @@ export class NotificationService {
     this.fcm = admin.messaging();
   }
 
-  // @Cron(CronExpression.EVERY_SECOND)
+  @Cron(CronExpression.EVERY_SECOND, {
+    disabled: true,
+  })
   async handleResendNotification() {
     this.logger.log(`RUN RESEND NOTIFICATION`);
     // 재전송 타겟을 가져온다.

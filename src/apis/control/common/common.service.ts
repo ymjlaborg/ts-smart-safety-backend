@@ -8,12 +8,13 @@ import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Subject } from 'rxjs';
 import { ListAlertDto } from './dto/list-alert.dto';
+import { AlertHistoryEntity } from '@app/entities';
 
 @Injectable()
 export class CommonService {
   private readonly logger: Logger = new Logger(CommonService.name);
   private alertSubject = new Subject<any>();
-  private fireSubject = new Subject<any>();
+  private fireSubject = new Subject<AlertHistoryEntity>();
   private deviceSubject = new Subject<any>();
 
   constructor(
@@ -77,8 +78,9 @@ export class CommonService {
   }
 
   @OnEvent(EventName.FireAlert)
-  handleFire() {
-    this.fireSubject.next({});
+  handleFire(alertHistory: AlertHistoryEntity) {
+    this.logger.log('FIRE !!!!');
+    this.fireSubject.next(alertHistory);
   }
 
   /**

@@ -85,9 +85,10 @@ export class CommonController {
   })
   @ApiBearerAuth('accessToken')
   @Sse('fire')
+  @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
   fire(): Observable<any> {
-    return this.commonService.getFireStream().pipe(map(() => ({})));
+    return this.commonService.getFireStream().pipe(map((value) => value));
   }
 
   @ApiOperation({
