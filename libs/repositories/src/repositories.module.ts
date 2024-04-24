@@ -8,6 +8,7 @@ import { NodedataRepository } from './nodedata.repository';
 import { AlertHistoryRepository } from './alert-history.repository';
 import { NodeRepository } from './node.repository';
 import { CameraRepository } from './camera.repository';
+import { DeviceRepository } from './device.repository';
 
 @Module({
   providers: [
@@ -20,6 +21,7 @@ import { CameraRepository } from './camera.repository';
     NodedataRepository,
     NodeRepository,
     CameraRepository,
+    DeviceRepository,
   ],
   exports: [
     OfficeRepository,
@@ -31,6 +33,7 @@ import { CameraRepository } from './camera.repository';
     NodedataRepository,
     NodeRepository,
     CameraRepository,
+    DeviceRepository,
   ],
 })
 export class RepositoriesModule {}

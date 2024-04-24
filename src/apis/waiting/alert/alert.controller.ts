@@ -43,6 +43,6 @@ export class AlertController {
   @Sse('nodedata')
   @HttpCode(HttpStatus.OK)
   nodedata(): Observable<any> {
-    return this.alertService.getNodedataStream().pipe(map(() => ({})));
+    return this.alertService.getNodedataStream().pipe(map((value) => value));
   }
 }

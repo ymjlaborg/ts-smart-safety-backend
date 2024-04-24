@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AlertHistoryRepository } from '@app/repositories';
+import { AlertHistoryRepository, DeviceRepository } from '@app/repositories';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AlertType, EventName } from '@app/enum';
 import { NodeDataDto } from './dto/node-data.dto';
@@ -8,6 +8,7 @@ import { NodeDataDto } from './dto/node-data.dto';
 export class HookService {
   constructor(
     private readonly alertHistoryRepository: AlertHistoryRepository,
+    private readonly deviceRepository: DeviceRepository,
     private readonly eventEmitter: EventEmitter2,
   ) {}
 
@@ -15,7 +16,15 @@ export class HookService {
    * 노드 데이터를 전달한다.
    * @param nodedatas
    */
-  async sendNodedatas(nodedatas: NodeDataDto[]) {}
+  async sendNodedatas(nodedatas: NodeDataDto[]) {
+    const deviceStatus =
+      await this.deviceRepository.countDevStatusByUserID('TS_Dongtan');
+
+    this.eventEmitter.emit(EventName.NodeData, {
+      nodedatas,
+      deviceStatus,
+    });
+  }
 
   /**
    * 알림 전달

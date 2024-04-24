@@ -28,9 +28,9 @@ export class AlertService {
   }
 
   @OnEvent(EventName.NodeData)
-  handleNodedata() {
+  handleNodedata(value) {
     this.logger.log('Nodedata!!!');
-    this.nodedataSubject.next({});
+    this.nodedataSubject.next(value);
   }
 
   getNodedataStream() {

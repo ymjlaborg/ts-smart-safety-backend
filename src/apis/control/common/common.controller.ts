@@ -96,9 +96,9 @@ export class CommonController {
     description: '노드 데이터 정보 및 연결 확인 데이터를 실시간으로 불러온다.',
   })
   @ApiBearerAuth('accessToken')
-  @Sse('devices')
+  @Sse('nodedata')
   @HttpCode(HttpStatus.OK)
-  device(): Observable<any> {
-    return this.commonService.getDeviceStream().pipe(map(() => ({})));
+  nodedata(): Observable<any> {
+    return this.commonService.getNodedataStream().pipe(map((value) => value));
   }
 }

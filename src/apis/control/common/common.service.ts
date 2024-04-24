@@ -1,9 +1,5 @@
 import { EventName } from '@app/enum';
-import {
-  AlertHistoryRepository,
-  CameraRepository,
-  CourseRepository,
-} from '@app/repositories';
+import { AlertHistoryRepository, CourseRepository } from '@app/repositories';
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Subject } from 'rxjs';
@@ -15,12 +11,11 @@ export class CommonService {
   private readonly logger: Logger = new Logger(CommonService.name);
   private alertSubject = new Subject<AlertHistoryEntity>();
   private fireSubject = new Subject<AlertHistoryEntity>();
-  private deviceSubject = new Subject<any>();
+  private nodedataSubject = new Subject<any>();
 
   constructor(
     private readonly alertHistoryRepository: AlertHistoryRepository,
     private readonly courseRepository: CourseRepository,
-    private readonly cameraRepository: CameraRepository,
   ) {}
 
   /**
@@ -66,7 +61,6 @@ export class CommonService {
 
   @OnEvent(EventName.ControlAlert)
   handleAlert(alertHistory: AlertHistoryEntity) {
-    this.logger.log('ALERT SEND!');
     this.alertSubject.next(alertHistory);
   }
 
@@ -74,10 +68,13 @@ export class CommonService {
     return this.alertSubject.asObservable();
   }
 
-  handleDevice() {}
+  @OnEvent(EventName.NodeData)
+  handleNodedata(value) {
+    this.nodedataSubject.next(value);
+  }
 
-  getDeviceStream() {
-    return this.deviceSubject.asObservable();
+  getNodedataStream() {
+    return this.nodedataSubject.asObservable();
   }
 
   @OnEvent(EventName.FireAlert)

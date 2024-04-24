@@ -1,0 +1,548 @@
+[
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Temperature",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Temperature",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Temperature",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Temperature",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Temperature",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Temperature",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Humidity",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Humidity",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Humidity",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Humidity",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Humidity",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "Humidity",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM1p0",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM1p0",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM1p0",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM1p0",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM1p0",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM1p0",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM2p5",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM2p5",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM2p5",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM2p5",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM2p5",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "DustPM2p5",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 1
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CO",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CO",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CO",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CO2",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CO2",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CO2",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "NO",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "NO",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "NO",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "NO2",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "NO2",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "NO2",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "H2S",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "H2S",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "H2S",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CH4",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 1,
+      "courseName": "1진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CH4",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 2,
+      "courseName": "2진로",
+      "entranceType": 0
+    }
+  },
+  {
+    "nodedataid": 1,
+    "value": 30,
+    "lTime": "2024-04-25 02:21:00",
+    "nodeID": "dldldllelele",
+    "nodeName": "CH4",
+    "nodeUnit": "",
+    "course": {
+      "courseID": 3,
+      "courseName": "3진로",
+      "entranceType": 0
+    }
+  }
+]

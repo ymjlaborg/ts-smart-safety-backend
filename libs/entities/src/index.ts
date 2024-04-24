@@ -8,3 +8,4 @@ export * from './nodedata.entity';
 export * from './node.entity';
 export * from './camera.entity';
 export * from './node-course.entity';
+export * from './device.entity';
