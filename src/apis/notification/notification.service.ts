@@ -231,7 +231,11 @@ export class NotificationService implements OnModuleInit {
     };
 
     const response = await this.fcm.sendEachForMulticast(mobileMessages);
-    await this.fcm.sendEachForMulticast(watchMessages);
+    const watchRes = await this.fcm.sendEachForMulticast(watchMessages);
+
+    this.logger.log(
+      `SEND WATCH >> FAIL COUNT >>  ${watchRes.failureCount} / SUCCESS COUNT >>  ${watchRes.successCount}`,
+    );
 
     return response.responses.map(
       (sendResponse: SendResponse, index: number) => {
