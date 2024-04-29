@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { AlertHistoryRepository, DeviceRepository } from '@app/repositories';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AlertType, EventName } from '@app/enum';
@@ -6,6 +6,8 @@ import { NodeDataDto } from './dto/node-data.dto';
 
 @Injectable()
 export class HookService {
+  private readonly logger: Logger = new Logger(HookService.name);
+
   constructor(
     private readonly alertHistoryRepository: AlertHistoryRepository,
     private readonly deviceRepository: DeviceRepository,
@@ -19,6 +21,8 @@ export class HookService {
   async sendNodedatas(nodedatas: NodeDataDto[]) {
     const deviceStatus =
       await this.deviceRepository.countDevStatusByUserID('TS_Dongtan');
+
+    this.logger.log(`REQUEST NODEDATAS = `, nodedatas);
 
     this.eventEmitter.emit(EventName.NodeData, {
       nodedatas,

@@ -1,4 +1,5 @@
 import { WorkerAlarmMessageEntity } from '@app/entities';
+import { AlertLevel } from '@app/enum';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ListAlertDto } from 'src/apis/worker/alert/dto/list-alert.dto';
@@ -196,6 +197,7 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
     const resendTimer = this.configService.get('notification.resendTimer');
     this.logger.log(`RESEND SECOND TARGET >> ${resendTimer}`);
 
+    // 지정된 시간 이후 동안 읽지 않았을 경우 + 알람이 경고일 경우에만 재전송한다.
     const query = this.createQueryBuilder('tam')
       .select([
         'tam.id',
@@ -216,11 +218,11 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
       .innerJoin('tam.alertHistory', 'ah')
       .innerJoin('tam.worker', 'worker')
       .innerJoin('ah.course', 'tc')
-      .where('UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(tam.sendAt) >= :time', {
+      .where('ah.alertLevel = :alertLevel', { alertLevel: AlertLevel.Warning })
+      .andWhere('tam.readAt IS NULL')
+      .andWhere('UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(tam.sendAt) >= :time', {
         time: resendTimer,
-      })
-      .andWhere('tam.readAt IS NULL');
-
+      });
     return await query.getMany();
   }
 

@@ -31,10 +31,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
       status = exception.getStatus();
       errorDetails = exception.getResponse();
       errorMessage = Utils.getHttpStatusKey(HttpStatus, exception.getStatus());
+      Logger.error(
+        `CustomException errorStatus = ${status}`,
+        `errorMessage = ${errorMessage}`,
+      );
     } else if (exception instanceof NotFoundException) {
       status = HttpStatus.NOT_FOUND;
       errorMessage = 'Not Found';
       errorDetails = ERROR_CODES.COMMON_NOT_FOUND;
+      Logger.error(
+        `NotFoundException errorStatus = ${status}`,
+        `errorMessage = ${errorMessage}`,
+      );
     } else if (exception instanceof HttpException) {
       console.log('HttpException');
       status = exception.getStatus();
@@ -43,11 +51,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
         errorCode: status,
         errorMessage: errorMessage,
       };
+      Logger.error(
+        `HttpException errorStatus = ${status}`,
+        `errorMessage = ${errorMessage}`,
+      );
     } else {
-      Logger.error(exception.message);
       status = HttpStatus.INTERNAL_SERVER_ERROR;
       errorMessage = 'Internal server error';
       errorDetails = ERROR_CODES.COMMON_INTERNAL_SERVER;
+      Logger.error(
+        `INTERNAL_SERVER_ERROR errorStatus = ${status}`,
+        `errorMessage = ${errorMessage}`,
+      );
     }
 
     response.status(status).json({
