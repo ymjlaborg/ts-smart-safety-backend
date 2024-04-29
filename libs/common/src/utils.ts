@@ -72,4 +72,26 @@ export class Utils {
   static generateIV(): string {
     return randomBytes(16).toString('hex');
   }
+
+  static transformData(nodeDataArray) {
+    const courseMap = new Map();
+
+    for (const nodeData of nodeDataArray) {
+      const { course, ...rest } = nodeData;
+      const { courseID, courseName, entranceType } = course;
+
+      if (!courseMap.has(courseID)) {
+        courseMap.set(courseID, {
+          courseID,
+          courseName,
+          entranceType: entranceType || null,
+          nodeData: [],
+        });
+      }
+
+      courseMap.get(courseID).nodeData.push(rest);
+    }
+
+    return Array.from(courseMap.values());
+  }
 }

@@ -3,6 +3,7 @@ import { AlertHistoryRepository, DeviceRepository } from '@app/repositories';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AlertType, EventName } from '@app/enum';
 import { NodeDataDto } from './dto/node-data.dto';
+import { Utils } from '@app/common';
 
 @Injectable()
 export class HookService {
@@ -25,7 +26,7 @@ export class HookService {
     this.logger.log(`REQUEST NODEDATAS = `, nodedatas);
 
     this.eventEmitter.emit(EventName.NodeData, {
-      nodedatas,
+      courseData: Utils.transformData(nodedatas),
       deviceStatus,
     });
   }
