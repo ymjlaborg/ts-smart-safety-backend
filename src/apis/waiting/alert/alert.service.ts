@@ -3,7 +3,9 @@ import { Subject } from 'rxjs';
 
 import { AlertHistoryEntity } from '@app/entities';
 import { OnEvent } from '@nestjs/event-emitter';
-import { EventName } from '@app/enum';
+import { EntranceType, EventName } from '@app/enum';
+
+import { groupBy } from 'lodash';
 
 @Injectable()
 export class AlertService {
@@ -30,7 +32,20 @@ export class AlertService {
   @OnEvent(EventName.NodeData)
   handleNodedata(value) {
     this.logger.log('Nodedata!!!');
-    this.nodedataSubject.next(value);
+
+    if (value.length) {
+      const newItems = value
+        .filter((v) =>
+          ['Temperature', 'DustPM10', 'DustPM2p5', 'Humidity'].find((w) =>
+            v.nodeName.includes(w),
+          ),
+        )
+        .filter((v) => v.course.entranceType === EntranceType.Entrance);
+
+      this.nodedataSubject.next(groupBy(newItems, 'course.courseID'));
+    } else {
+      this.nodedataSubject.next([]);
+    }
   }
 
   getNodedataStream() {

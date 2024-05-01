@@ -1,10 +1,15 @@
 import { EventName } from '@app/enum';
-import { AlertHistoryRepository, CourseRepository } from '@app/repositories';
+import {
+  AlertHistoryRepository,
+  CourseRepository,
+  DeviceRepository,
+} from '@app/repositories';
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Subject } from 'rxjs';
 import { ListAlertDto } from './dto/list-alert.dto';
 import { AlertHistoryEntity } from '@app/entities';
+import { groupBy } from 'lodash';
 
 @Injectable()
 export class CommonService {
@@ -16,6 +21,7 @@ export class CommonService {
   constructor(
     private readonly alertHistoryRepository: AlertHistoryRepository,
     private readonly courseRepository: CourseRepository,
+    private readonly deviceRepository: DeviceRepository,
   ) {}
 
   /**
@@ -69,8 +75,13 @@ export class CommonService {
   }
 
   @OnEvent(EventName.NodeData)
-  handleNodedata(value) {
-    this.nodedataSubject.next(value);
+  async handleNodedata(value) {
+    const status =
+      await this.deviceRepository.countDevStatusByUserID('TS_Dongtan');
+    this.nodedataSubject.next({
+      nodedata: groupBy(value, 'course.courseID'),
+      status,
+    });
   }
 
   getNodedataStream() {

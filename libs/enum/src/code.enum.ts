@@ -50,6 +50,7 @@ export enum AlertType {
 export enum EntranceType {
   Entrance = 0, // 입구
   Exit = 1, // 출구
+  IN = 2, // 내부
 }
 
 /**
@@ -83,4 +84,17 @@ export enum EventName {
   WorkerPush = 'worker.push',
   FireAlert = 'fire.alert',
   NodeData = 'all.nodedata',
+}
+
+export enum NodeNameKR {
+  CO = '일산화탄소',
+  CO2 = '이산화탄소',
+  NO = '일산화질소',
+  NO2 = '이산화질소',
+  H2S = '황화수소',
+  CH4 = '메탄',
+  TEMPERATURE = '온도',
+  DUSTPM10 = '미세먼지',
+  DUSTPM2P5 = '초미세먼지',
+  HUMIDITY = '습도',
 }
