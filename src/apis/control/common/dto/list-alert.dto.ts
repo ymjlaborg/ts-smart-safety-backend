@@ -1,5 +1,5 @@
 import { ListDto } from '@app/dto';
-import { AlertLevel } from '@app/enum';
+import { AlertLevel, AlertType } from '@app/enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
@@ -19,6 +19,14 @@ export class ListAlertDto extends ListDto {
     type: [Number],
   })
   courses: number[] | number;
+
+  @IsOptional()
+  @ApiPropertyOptional({
+    title: '내용',
+    description: '알림 내용',
+    type: [AlertType],
+  })
+  types: AlertType[] | AlertType;
 
   @IsOptional()
   @ApiPropertyOptional({

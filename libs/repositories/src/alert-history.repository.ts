@@ -78,6 +78,7 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
         'ah.alertTitle',
         'ah.alertContent',
         'ah.entranceType',
+        'ah.alertType',
         'c.courseID',
         'c.courseName',
       ])
@@ -131,6 +132,18 @@ export class AlertHistoryRepository extends Repository<AlertHistoryEntity> {
         });
       } else {
         query.andWhere('ah.courseID = :courses', { courses: params.courses });
+      }
+    }
+
+    if (params.types) {
+      if (params.types instanceof Array) {
+        query.andWhere('ah.alertType IN (:...types)', {
+          types: params.types,
+        });
+      } else {
+        query.andWhere('ah.alertType = :alertType', {
+          alertType: params.types,
+        });
       }
     }
 

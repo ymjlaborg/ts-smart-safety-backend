@@ -1,8 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { CreateWorkerDto } from '@app/dto';
+import { CreateWorkerDto, ListDto } from '@app/dto';
 import { OfficeRepository, WorkerRepository } from '@app/repositories';
+import { Not } from 'typeorm';
+import { WorkerStatus } from '@app/enum';
 
 @Injectable()
 export class WorkerService {
@@ -13,6 +15,39 @@ export class WorkerService {
     private readonly workerRepository: WorkerRepository,
     private readonly officeRepository: OfficeRepository,
   ) {}
+
+  /**
+   * 목록을 가져온다.
+   *
+   * @param listDto
+   * @returns
+   */
+  async find(listDto: ListDto) {
+    const totalCount = await this.workerRepository.count({
+      where: {
+        workerStatus: Not(WorkerStatus.Deleted),
+      },
+    });
+    const list = await this.workerRepository.find({
+      where: {
+        workerStatus: Not(WorkerStatus.Deleted),
+      },
+      relations: ['office'],
+      take: listDto.limit,
+      skip: listDto.offset,
+    });
+
+    const totalPage = Math.ceil(totalCount / listDto.limit);
+
+    return {
+      list,
+      pagination: {
+        totalCount,
+        totalPage,
+        currentPage: listDto.page,
+      },
+    };
+  }
 
   /**
    * 관리자 정보
