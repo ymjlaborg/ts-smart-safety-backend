@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { WorkerAlarmMessageRepository } from '@app/repositories';
 import { ListAlertDto } from './dto/list-alert.dto';
 import { CustomException } from '@app/common';
+import { AlertLevel } from '@app/enum';
 
 @Injectable()
 export class AlertService {
@@ -30,7 +31,32 @@ export class AlertService {
     });
 
     const totalPage: number = Math.ceil(totalCount / listDto.limit);
+
+    const warningCount =
+      await this.workerAlarmMessageRepository.countByWorkerIdAndAlertLevel(
+        id,
+        AlertLevel.Warning,
+      );
+    const cautionCount =
+      await this.workerAlarmMessageRepository.countByWorkerIdAndAlertLevel(
+        id,
+        AlertLevel.Caution,
+      );
+
     const readAt = await this.workerAlarmMessageRepository.readAtByWorkerId(id);
+
+    // 2개의 꼭지가 나오지 않았다면 추가해서 0으로 값을 만들어 전달한다.
+    const exsitingAlertLevels = readAt.map((value) => value.alertLevel);
+    const missingAlertLevels = [1, 2].filter(
+      (level) => !exsitingAlertLevels.includes(level),
+    );
+
+    const missingAlerts = missingAlertLevels.map((level) => ({
+      alertLevel: level,
+      count: 0,
+    }));
+
+    const newReadAt = [...readAt, ...missingAlerts];
 
     return {
       list,
@@ -38,8 +64,10 @@ export class AlertService {
         totalCount,
         totalPage,
         currentPage: listDto.page,
+        warningCount,
+        cautionCount,
       },
-      readAt,
+      readAt: newReadAt,
     };
   }
 

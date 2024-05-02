@@ -64,8 +64,8 @@ export class CommonService {
       where: {
         id: workerId,
       },
-      relations: ['courses'],
-      select: ['courses'],
+      relations: ['courses', 'office'],
+      select: ['office', 'courses'],
       order: {
         courses: {
           courseID: 'ASC',
@@ -73,10 +73,13 @@ export class CommonService {
       },
     });
 
-    return result.courses.map((course) => ({
-      courseID: course.courseID,
-      courseName: course.courseName,
-    }));
+    const r = {
+      workerName: result.workerName,
+      officeName: result.office.officeName,
+      courses: result.courses,
+    };
+
+    return r;
   }
 
   /**
@@ -87,7 +90,7 @@ export class CommonService {
   async dashboard(workerID: number) {
     const courses = await this.coursesByWorker(workerID);
     let courseID: number;
-    if (!courses.length) {
+    if (!courses.courses.length) {
       const worker = await this.workerRepository.findOne({
         where: {
           id: workerID,
@@ -100,7 +103,7 @@ export class CommonService {
       );
       courseID = courses[0].courseID;
     } else {
-      courseID = courses[0].courseID;
+      courseID = courses.courses[0].courseID;
     }
 
     const nodeNames = ['Temperature', 'Humidity', 'PM10'];

@@ -235,4 +235,23 @@ export class WorkerAlarmMessageRepository extends Repository<WorkerAlarmMessageE
    * 전송한 결과 값을 입력한다.
    */
   async updateResult() {}
+
+  /**
+   * 사용자 아이디가 가진 알림 중 경고 아이디만 카운팅 한다.
+   *
+   * @param workerId
+   */
+  async countByWorkerIdAndAlertLevel(
+    workerId: number,
+    alertLevel: AlertLevel,
+  ): Promise<number> {
+    const query = this.createQueryBuilder('wam')
+      .innerJoin('wam.alertHistory', 'ah')
+      .where('wam.workerID = :workerId', { workerId })
+      .andWhere('ah.alertLevel = :alertLevel', {
+        alertLevel,
+      });
+
+    return await query.getCount();
+  }
 }
