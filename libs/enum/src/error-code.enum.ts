@@ -11,6 +11,10 @@ export const ERROR_CODES = {
     CODE: 1012,
     MESSAGE: '아이디 또는 비밀번호가 일치하지 않습니다.',
   },
+  AUTH_DUPLICATE_WORKER: {
+    CODE: 1015,
+    MESSAGE: '동일한 작업자 아이디가 존재합니다.',
+  },
   AUTH_NO_ACCESS_TOKEN: {
     CODE: 1020,
     MESSAGE: '접근 토큰이 없습니다.',

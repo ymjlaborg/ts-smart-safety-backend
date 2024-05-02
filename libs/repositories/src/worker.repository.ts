@@ -83,9 +83,10 @@ export class WorkerRepository extends Repository<WorkerEntity> {
    *
    * @param createWorkerDto
    */
-  async createWorker(createWorkerDto: CreateWorkerDto) {
+  async createWorker(createWorkerDto: Omit<CreateWorkerDto, 'courses'>) {
     const result = await this.save({
       ...createWorkerDto,
+      workerStatus: WorkerStatus.Use,
     });
 
     return {

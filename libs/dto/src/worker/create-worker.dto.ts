@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, Matches, MinLength } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  Matches,
+  MinLength,
+} from 'class-validator';
 
 /**
  * 데이터 입력
@@ -47,4 +53,37 @@ export class CreateWorkerDto {
     required: true,
   })
   workerName: string;
+
+  @IsArray({
+    message: '작업 진로는 반드시 선택하셔야 합니다.',
+  })
+  @IsNumber({}, { each: true })
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '작업 진로',
+    required: true,
+  })
+  courses: number[];
+}
+
+export class UpdateWorkerDto {
+  @IsNotEmpty({
+    message: '관리자명은 필수 입력 항목입니다.',
+  })
+  @ApiProperty({
+    description: '관리자명',
+    required: true,
+  })
+  workerName: string;
+
+  @IsArray({
+    message: '작업 진로는 반드시 선택하셔야 합니다.',
+  })
+  @IsNumber({}, { each: true })
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '작업 진로',
+    required: true,
+  })
+  courses: number[];
 }

@@ -16,7 +16,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { WorkerService } from './worker.service';
-import { CreateWorkerDto, ListDto } from '@app/dto';
+import { CreateWorkerDto, ListDto, UpdateWorkerDto } from '@app/dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@app/interceptors';
 import { HttpExceptionFilter } from '@app/filters';
@@ -46,7 +46,9 @@ export class WorkerController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('access'))
-  async findById(@Param('id') id: number) {}
+  async findById(@Param('id') id: number) {
+    return await this.workerService.findById(id);
+  }
 
   @ApiOperation({
     summary: '작업자 생성',
@@ -62,10 +64,17 @@ export class WorkerController {
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('access'))
-  async updateById() {}
+  async updateById(
+    @Param('id') id: number,
+    @Body() updateWorkerDto: UpdateWorkerDto,
+  ) {
+    return await this.workerService.updateById(id, updateWorkerDto);
+  }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard('access'))
-  async removeById() {}
+  async removeById(@Param('id') id: number) {
+    await this.workerService.removeById(id);
+  }
 }
