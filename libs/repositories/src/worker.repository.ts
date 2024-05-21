@@ -131,4 +131,20 @@ export class WorkerRepository extends Repository<WorkerEntity> {
       watchToken: Not(IsNull()),
     });
   }
+
+  /**
+   * 워치 토큰을 지운다.
+   * @param id
+   */
+  async removeWatchToken(id: number) {
+    await this.update({ id }, { watchToken: null });
+  }
+
+  /**
+   * 모바일 토큰을 지운다.
+   * @param id
+   */
+  async removeMobileToken(id: number) {
+    await this.update({ id }, { mobileToken: null });
+  }
 }

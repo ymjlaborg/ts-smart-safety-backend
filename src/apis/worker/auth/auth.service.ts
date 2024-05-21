@@ -122,4 +122,21 @@ export class AuthService {
       expireAt,
     };
   }
+
+  /**
+   * 로그아웃을 한다.
+   * @param id
+   * @returns
+   */
+  async signout(id: number) {
+    const [{ count }] = await Promise.all([
+      await this.tokenService.removeByTarget(TokenServiceName.Worker, id),
+      await this.workerRepository.removeMobileToken(id),
+      await this.workerRepository.removeWatchToken(id),
+    ]);
+
+    return {
+      count,
+    };
+  }
 }

@@ -93,4 +93,17 @@ export class AuthController {
     const id: number = req.user as number;
     return await this.authService.mobileToken(id, token);
   }
+
+  @Post('signout')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(AuthGuard('access'))
+  @ApiBearerAuth('accessToken')
+  @ApiOperation({
+    summary: '로그아웃',
+    description: '서비스를 로그아웃 한다.',
+  })
+  async signout(@Req() req: Request) {
+    const id: number = req.user as number;
+    return await this.authService.signout(id);
+  }
 }
