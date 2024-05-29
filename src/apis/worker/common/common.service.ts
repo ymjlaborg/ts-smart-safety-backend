@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   CourseRepository,
   NodeRepository,
@@ -7,6 +7,7 @@ import {
 } from '@app/repositories';
 import { In } from 'typeorm';
 import { RedisService } from '@app/redis';
+import { WorkerStatus } from '@app/enum';
 
 @Injectable()
 export class CommonService {
@@ -60,6 +61,20 @@ export class CommonService {
    * @param workerId
    */
   async coursesByWorker(workerId: number) {
+    const worker = await this.workerRepository.findOne({
+      where: {
+        id: workerId,
+        workerStatus: WorkerStatus.Use,
+      },
+    });
+
+    if (!worker) {
+      throw new BadRequestException('작업자가 존재하지 않습니다.');
+    }
+
+    // 전체 코스 목록
+    const courses = await this.courseRepository.findByOfficeID(worker.officeID);
+
     const result = await this.workerRepository.findOne({
       where: {
         id: workerId,
@@ -73,38 +88,41 @@ export class CommonService {
       },
     });
 
+    const newCourses = courses.map((course) => {
+      const selected: boolean = !!result.courses.find(
+        (v) => v.courseID === course.courseID,
+      );
+      return {
+        courseID: course.courseID,
+        courseName: course.courseName,
+        selected,
+      };
+    });
+
     const r = {
       workerName: result.workerName,
       officeName: result.office.officeName,
-      courses: result.courses,
+      courses: newCourses,
     };
 
     return r;
   }
 
   /**
-   *
+   * 워치의 대시보드를 보여준다.
    *
    * @param worker
    */
   async dashboard(workerID: number) {
-    const courses = await this.coursesByWorker(workerID);
-    let courseID: number;
-    if (!courses.courses.length) {
-      const worker = await this.workerRepository.findOne({
-        where: {
-          id: workerID,
-        },
-        select: ['officeID'],
-      });
+    const { courses } = await this.coursesByWorker(workerID);
 
-      const courses = await this.courseRepository.findByOfficeID(
-        worker.officeID,
-      );
-      courseID = courses[0].courseID;
-    } else {
-      courseID = courses.courses[0].courseID;
+    const selectedCourses = courses.filter((c) => c.selected);
+
+    if (selectedCourses.length === 0) {
+      throw new BadRequestException();
     }
+
+    const courseID = selectedCourses[0].courseID;
 
     const nodeNames = ['Temperature', 'Humidity', 'PM10'];
     const nodes = await this.nodeRepository.findByCourseIDAndNodeNames(
