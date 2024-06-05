@@ -34,15 +34,37 @@ export class AlertService {
     this.logger.log('Nodedata!!!');
 
     if (value.length) {
-      const newItems = value
+      const weather = value
         .filter((v) =>
-          ['Temperature', 'DustPM10', 'DustPM2p5', 'Humidity'].find((w) =>
-            v.nodeName.includes(w),
-          ),
+          [
+            'Temperature', // 온도
+            'Humidity', // 습도
+            'DustPM10', // 미세먼지
+            'DustPM2p5', // 초미세먼지
+          ].find((w) => v.nodeName.includes(w)),
         )
         .filter((v) => v.course.entranceType === EntranceType.Entrance);
 
-      this.nodedataSubject.next(groupBy(newItems, 'course.courseID'));
+      const gas = value
+        .filter((v) =>
+          [
+            'CO', // 일산화탄소
+            'CO2', // 이산화탄소
+            'NO', // 일산화질소
+            'NO2', // 이산화질소
+            'CH4', // 메탄
+            'H2S', // 황화수소
+          ].find((w) => v.nodeName.includes(w)),
+        )
+        .filter(
+          (v) =>
+            v.course.entranceType !== EntranceType.Entrance &&
+            v.course.entranceType !== EntranceType.Exit,
+        );
+
+      this.nodedataSubject.next(
+        groupBy([...weather, ...gas], 'course.courseID'),
+      );
     } else {
       this.nodedataSubject.next([]);
     }
