@@ -54,6 +54,7 @@ export class AuthController {
     summary: '대기실 로그아웃',
     description: '대기실 사용자 로그아웃',
   })
+  @ApiBearerAuth('accessToken')
   @Post('signout')
   @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
