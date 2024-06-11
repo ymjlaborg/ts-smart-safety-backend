@@ -54,19 +54,13 @@ export class AuthService {
   /**
    * 로그아웃을 한다.
    *
-   * @param officeID
+   * @param userId
    * @returns
    */
-  async signout(officeID: number) {
-    const exists = await this.officeRepository.existsByOfficeID(officeID);
-
-    if (!exists) {
-      throw new CustomException('AUTH_NOT_MATCH', HttpStatus.UNAUTHORIZED);
-    }
-
+  async signout(userId: number) {
     return await this.tokenService.removeByTarget(
       TokenServiceName.Waiting,
-      officeID,
+      userId,
     );
   }
 }
