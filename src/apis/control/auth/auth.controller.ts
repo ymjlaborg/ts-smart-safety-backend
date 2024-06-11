@@ -46,7 +46,7 @@ export class AuthController {
   @UseGuards(AuthGuard('refresh'))
   @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request) {
-    const id: number = req.user as number;
+    const { id } = req.user as { id: number; refreshToken: string };
     return await this.authService.refresh(id);
   }
 

@@ -39,19 +39,13 @@ export class AuthService {
 
   /**
    * token 변경
-   * @param officeID
+   * @param userId
    * @returns
    */
-  async refresh(officeID: number): Promise<TokenDto> {
-    const exists = await this.officeRepository.existsByOfficeID(officeID);
-
-    if (!exists) {
-      throw new CustomException('AUTH_NOT_MATCH', HttpStatus.UNAUTHORIZED);
-    }
-
+  async refresh(userId: number): Promise<TokenDto> {
     const token = await this.tokenService.createToken({
       serviceName: TokenServiceName.Waiting,
-      targetID: officeID,
+      targetID: userId,
     });
 
     return token;

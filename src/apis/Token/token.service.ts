@@ -21,6 +21,9 @@ export class TokenService {
   async createToken(createTokenDto: CreateTokenDto): Promise<TokenDto> {
     // 기존 토큰이 있는지 확인 후 삭제 (전체 삭제한다)
     const { serviceName, targetID } = createTokenDto;
+
+    console.log(serviceName, targetID);
+
     const count = await this.tokenRepository.countByTarget(
       serviceName,
       targetID,
