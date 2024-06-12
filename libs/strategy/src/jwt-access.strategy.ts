@@ -59,9 +59,9 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
         throw new BadRequestException();
       }
 
-      console.log('ASDADS', id);
+      console.log('serviceName', serviceName, id);
 
-      return payload['id'];
+      return id;
     } catch (e) {
       if (e instanceof BadRequestException) {
         throw new CustomException(

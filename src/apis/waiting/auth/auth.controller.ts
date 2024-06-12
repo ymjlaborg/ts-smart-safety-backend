@@ -46,7 +46,7 @@ export class AuthController {
   @UseGuards(AuthGuard('refresh'))
   @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request) {
-    const { id } = req.body as { id: number; refreshToken: string };
+    const { id } = req.user as { id: number; refreshToken: string };
     return await this.authService.refresh(id);
   }
 
@@ -59,7 +59,8 @@ export class AuthController {
   @UseGuards(AuthGuard('access'))
   @HttpCode(HttpStatus.OK)
   async signout(@Req() req: Request) {
-    const id: number = req.body as number;
+    const id: number = req.user as number;
+    console.log(req.user);
     return await this.authService.signout(id);
   }
 }
