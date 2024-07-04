@@ -126,7 +126,7 @@ export class NotificationService implements OnModuleInit {
   async handleSendNotification(alertHistory: AlertHistoryEntity) {
     // 전송 타겟을 지정한다. 업무 진로에 대한 작용..
     const targets = await this.workerRepository.findAllCourseID(
-      alertHistory.courseID,
+      alertHistory.course.courseID,
     );
 
     if (!targets.length) {
