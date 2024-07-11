@@ -128,7 +128,8 @@ export class WorkerRepository extends Repository<WorkerEntity> {
       },
       workerStatus: WorkerStatus.Use,
       mobileToken: Not(IsNull()),
-      watchToken: Not(IsNull()),
+      // [2024.07.11] - 워치 토큰 없어도 됨
+      // watchToken: Not(IsNull()),
     });
   }
 
