@@ -129,31 +129,54 @@ export class NotificationService implements OnModuleInit {
       alertHistory.course.courseID,
     );
 
-    console.log(
-      'targets >> ',
-      targets.length,
-      targets.map((a) => a.workerID),
-    );
+    this.logger.log('------------------------------------------------');
+    this.logger.log(`발송 대상 진로 => ${alertHistory.course.courseName}`);
+    this.logger.log(`발송 대상 인원 수 => ${targets.length} 인`);
+    this.logger.log('------------------------------------------------');
 
     if (!targets.length) {
       this.logger.log('Not Found Target');
       return;
     }
 
-    // 내용과 작업자의 정보를 workerAlertMessage에 넣는다.
-    const createPromises = targets.map(async (worker: WorkerEntity) => {
-      const saveResult = await this.workerAlarmMessageRepository.save({
-        alertHistoryID: alertHistory.id,
-        workerID: worker.id,
+    const createPromises = [];
+
+    targets.forEach((worker: WorkerEntity) => {
+      const p = new Promise(async (resolve, reject) => {
+        try {
+          const saveResult = await this.workerAlarmMessageRepository.save({
+            alertHistoryID: alertHistory.id,
+            workerID: worker.id,
+          });
+
+          resolve({
+            id: saveResult.id,
+            workerID: worker.id,
+            mobileToken: worker.mobileToken,
+            watchToken: worker.watchToken,
+          });
+        } catch (err) {
+          reject();
+        }
       });
 
-      return {
-        id: saveResult.id,
-        workerID: worker.id,
-        mobileToken: worker.mobileToken,
-        watchToken: worker.watchToken,
-      };
+      createPromises.push(p);
     });
+
+    // 내용과 작업자의 정보를 workerAlertMessage에 넣는다.
+    // const createPromises = targets.map(async (worker: WorkerEntity) => {
+    //   const saveResult = await this.workerAlarmMessageRepository.save({
+    //     alertHistoryID: alertHistory.id,
+    //     workerID: worker.id,
+    //   });
+
+    //   return {
+    //     id: saveResult.id,
+    //     workerID: worker.id,
+    //     mobileToken: worker.mobileToken,
+    //     watchToken: worker.watchToken,
+    //   };
+    // });
 
     const createdResult = await Promise.all(createPromises);
     const data: Record<string, string> = {
@@ -178,8 +201,10 @@ export class NotificationService implements OnModuleInit {
       data,
     );
 
-    const updatePromises = notificationResult.map(async (result) => {
-      return await this.workerAlarmMessageRepository.save(result);
+    const updatePromises = [];
+
+    notificationResult.forEach((result) => {
+      updatePromises.push(this.workerAlarmMessageRepository.save(result));
     });
 
     await Promise.all(updatePromises);
