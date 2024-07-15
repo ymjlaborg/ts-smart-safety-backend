@@ -43,7 +43,7 @@ async function bootstrap() {
     });
   }
 
-  const port: number = Number(process.env.PORT || 4000);
+  const port: number = Number(process.env.PORT || 3000);
   Logger.log(
     `🚀 Receipt Event Running http://localhost:${port}/${globalPrefix}`,
   );
