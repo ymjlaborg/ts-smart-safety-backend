@@ -129,6 +129,12 @@ export class NotificationService implements OnModuleInit {
       alertHistory.course.courseID,
     );
 
+    console.log(
+      'targets >> ',
+      targets.length,
+      targets.map((a) => a.workerID),
+    );
+
     if (!targets.length) {
       this.logger.log('Not Found Target');
       return;

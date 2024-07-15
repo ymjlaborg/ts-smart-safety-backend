@@ -43,11 +43,11 @@ async function bootstrap() {
     });
   }
 
-  const port: number = Number(process.env.PORT || 3000);
+  const port: number = Number(process.env.PORT || 4000);
   Logger.log(
     `🚀 Receipt Event Running http://localhost:${port}/${globalPrefix}`,
   );
 
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();

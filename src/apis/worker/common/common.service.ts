@@ -130,20 +130,40 @@ export class CommonService {
       nodeNames,
     );
 
-    const promises = nodes.map(async (node, index) => {
-      return new Promise(async (resolve, reject) => {
+    const promises = [];
+
+    // [2024.07.15]
+    // 각 값이 소수점 1자리만 나오도록 한다.
+    nodes.forEach((node, index) => {
+      const p = new Promise(async (resolve, reject) => {
         try {
+          console.log(node);
           const result = await this.redisService.get(
             `wownode:${node.devID}:${node.nodeName}`,
           );
 
+          this.logger.log(
+            `wownode:${node.devID}:${node.nodeName}`,
+            parseInt(JSON.parse(result).value || 0, 10),
+          );
+
+          let value = parseFloat(JSON.parse(result).value || 0);
+
+          if (isNaN(value)) {
+            value = 0;
+          }
+
+          const r = value.toFixed(1);
+
           resolve({
-            [nodeNames[index].toLowerCase()]: JSON.parse(result).value,
+            [nodeNames[index].toLowerCase()]: r,
           });
         } catch (e) {
           reject();
         }
       });
+
+      promises.push(p);
     });
 
     const results = (await Promise.all(promises)).reduce(
