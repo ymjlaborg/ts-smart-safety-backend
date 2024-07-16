@@ -45,6 +45,7 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
       const result = await this.tokenService.findByTarget(
         serviceName as TokenServiceName,
         id,
+        refreshToken,
         TokenType.Refresh,
       );
 

@@ -65,7 +65,7 @@ export class AuthService {
    * @param officeID
    * @returns
    */
-  async signout(officeID: number) {
+  async signout(officeID: number, token: string) {
     const exists = await this.officeRepository.existsByOfficeID(officeID);
 
     if (!exists) {
@@ -74,6 +74,7 @@ export class AuthService {
 
     return await this.tokenService.removeByTarget(
       TokenServiceName.Hr,
+      token,
       officeID,
     );
   }

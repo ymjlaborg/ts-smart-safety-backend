@@ -51,6 +51,7 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
       const result = await this.tokenService.findByTarget(
         serviceName as TokenServiceName,
         id,
+        accessToken,
         TokenType.Access,
       );
 

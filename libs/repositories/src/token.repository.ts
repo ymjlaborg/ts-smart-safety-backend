@@ -35,11 +35,13 @@ export class TokenRepository extends Repository<TokenEntity> {
   async findByTarget(
     serviceName: TokenServiceName,
     targetID: number,
+    token: string,
     tokenType: TokenType,
   ): Promise<TokenEntity> {
     return await this.findOneBy({
       serviceName,
       targetID,
+      token,
       tokenType,
     });
   }
@@ -52,10 +54,12 @@ export class TokenRepository extends Repository<TokenEntity> {
    */
   async countByTarget(
     serviceName: TokenServiceName,
+    token: string,
     targetID: number,
   ): Promise<number> {
     return await this.countBy({
       serviceName,
+      token,
       targetID,
     });
   }
@@ -68,10 +72,12 @@ export class TokenRepository extends Repository<TokenEntity> {
    */
   async removeByTarget(
     serviceName: TokenServiceName,
+    token: string,
     targetID: number,
   ): Promise<number> {
     const result = await this.delete({
       serviceName,
+      token,
       targetID,
     });
 

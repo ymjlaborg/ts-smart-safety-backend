@@ -128,9 +128,13 @@ export class AuthService {
    * @param id
    * @returns
    */
-  async signout(id: number) {
+  async signout(id: number, token: string) {
     const [{ count }] = await Promise.all([
-      await this.tokenService.removeByTarget(TokenServiceName.Worker, id),
+      await this.tokenService.removeByTarget(
+        TokenServiceName.Worker,
+        token,
+        id,
+      ),
       await this.workerRepository.removeMobileToken(id),
       await this.workerRepository.removeWatchToken(id),
     ]);

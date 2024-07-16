@@ -104,6 +104,7 @@ export class AuthController {
   })
   async signout(@Req() req: Request) {
     const id: number = req.user as number;
-    return await this.authService.signout(id);
+    const accessToken = req.headers['authorization']?.slice(7);
+    return await this.authService.signout(id, accessToken);
   }
 }

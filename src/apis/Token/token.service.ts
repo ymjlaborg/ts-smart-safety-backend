@@ -1,12 +1,14 @@
 import { CreateTokenDto, TokenDto } from '@app/dto/token';
 import { TokenServiceName, TokenType } from '@app/enum';
 import { TokenRepository } from '@app/repositories';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class TokenService {
+  private logger: Logger = new Logger(TokenService.name);
+
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
@@ -19,19 +21,20 @@ export class TokenService {
    * @param createTokenDto
    */
   async createToken(createTokenDto: CreateTokenDto): Promise<TokenDto> {
+    const { serviceName } = createTokenDto;
+
     // 기존 토큰이 있는지 확인 후 삭제 (전체 삭제한다)
-    const { serviceName, targetID } = createTokenDto;
+    // 중복 로그인이 가능하게 한다.
+    // console.log(serviceName, targetID);
 
-    console.log(serviceName, targetID);
+    // const count = await this.tokenRepository.countByTarget(
+    //   serviceName,
+    //   targetID,
+    // );
 
-    const count = await this.tokenRepository.countByTarget(
-      serviceName,
-      targetID,
-    );
-
-    if (count > 0) {
-      await this.tokenRepository.removeByTarget(serviceName, targetID);
-    }
+    // if (count > 0) {
+    //   await this.tokenRepository.removeByTarget(serviceName, targetID);
+    // }
 
     const accessToken = await this.createAccessToken(createTokenDto);
 
@@ -56,14 +59,19 @@ export class TokenService {
    * @param targetID
    * @returns
    */
-  async removeByTarget(serviceName: TokenServiceName, targetID: number) {
+  async removeByTarget(
+    serviceName: TokenServiceName,
+    token: string,
+    targetID: number,
+  ) {
     const count = await this.tokenRepository.countByTarget(
       serviceName,
+      token,
       targetID,
     );
 
     if (count > 0) {
-      await this.tokenRepository.removeByTarget(serviceName, targetID);
+      await this.tokenRepository.removeByTarget(serviceName, token, targetID);
     }
 
     return {
@@ -74,11 +82,13 @@ export class TokenService {
   async findByTarget(
     serviceName: TokenServiceName,
     targetID: number,
+    token: string,
     tokenType: TokenType,
   ) {
     const data = await this.tokenRepository.findByTarget(
       serviceName,
       targetID,
+      token,
       tokenType,
     );
 
@@ -115,7 +125,8 @@ export class TokenService {
 
     const expireAt = this.getTokenExpirationTime(accessToken);
 
-    console.log('CREATED!!', expireAt);
+    this.logger.log(`CREATED ACCESS TOKEN >> ${accessToken}`);
+
     await this.tokenRepository.save({
       serviceName,
       targetID,
@@ -129,7 +140,7 @@ export class TokenService {
   }
 
   /**
-   * 응답 토큰을 생성하여 전달한다.
+   * 갱신 토큰을 생성하여 전달한다.
    *
    * @param createTokenDto
    * @returns
@@ -148,6 +159,8 @@ export class TokenService {
     );
 
     const expireAt = this.getTokenExpirationTime(refreshToken);
+
+    this.logger.log(`CREATED REFRESH TOKEN >> ${refreshToken}`);
 
     await this.tokenRepository.save({
       serviceName,

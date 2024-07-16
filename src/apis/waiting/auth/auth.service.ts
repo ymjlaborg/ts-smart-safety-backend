@@ -57,9 +57,10 @@ export class AuthService {
    * @param userId
    * @returns
    */
-  async signout(userId: number) {
+  async signout(userId: number, token: string) {
     return await this.tokenService.removeByTarget(
       TokenServiceName.Waiting,
+      token,
       userId,
     );
   }
