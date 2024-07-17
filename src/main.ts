@@ -8,6 +8,7 @@ import {
 import { SwaggerConfig } from '@app/config';
 import { initializeTransactionalContext } from 'typeorm-transactional';
 import { HttpExceptionFilter } from '@app/filters';
+import { urlencoded, json } from 'body-parser';
 
 async function bootstrap() {
   // Transaction Decorator 적용
@@ -26,6 +27,10 @@ async function bootstrap() {
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  // BodyParser 이슈
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ limit: '50mb', extended: true }));
 
   // CORS
   app.enableCors({
