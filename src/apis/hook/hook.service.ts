@@ -33,9 +33,11 @@ export class HookService {
       // FIXED [2024.07.18]
       // 미리 지정된 타입에 속하지 않은 AlertType인 경우에는
       // 이벤트 발송을 처리하지 않는다.
-      if (!Object.values(AlertType).includes(result.alertType)) {
-        return;
-      }
+      // FIXED [2024.07.18]
+      // 불 필요
+      // if (!Object.values(AlertType).includes(result.alertType)) {
+      //   return;
+      // }
 
       if (result.alertType === AlertType.Fire) {
         this.eventEmitter.emit(EventName.FireAlert, result);
