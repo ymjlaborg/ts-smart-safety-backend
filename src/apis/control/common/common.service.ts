@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { ListAlertDto } from './dto/list-alert.dto';
 import { AlertHistoryEntity } from '@app/entities';
 import { groupBy } from 'lodash';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CommonService {
@@ -22,6 +23,7 @@ export class CommonService {
     private readonly alertHistoryRepository: AlertHistoryRepository,
     private readonly courseRepository: CourseRepository,
     private readonly deviceRepository: DeviceRepository,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
@@ -76,8 +78,11 @@ export class CommonService {
 
   @OnEvent(EventName.NodeData)
   async handleNodedata(value) {
-    const status =
-      await this.deviceRepository.countDevStatusByUserID('TS_Dongtan');
+    const userId = this.configService.get<string>('auth.centerId');
+    const status = await this.deviceRepository.countDevStatusByUserID(userId);
+
+    console.log('NODE DATA!! >> ', value);
+
     this.nodedataSubject.next({
       nodedata: groupBy(value, 'course.courseID'),
       status,

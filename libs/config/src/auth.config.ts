@@ -11,4 +11,5 @@ export default registerAs('auth', () => ({
   xApiKey: process.env.AUTH_X_API_KEY,
   xApiSecretKey: process.env.AUTH_X_API_SECRET_KEY,
   xApiIv: process.env.AUTH_X_API_IV,
+  centerId: process.env.CENTER_ID,
 }));

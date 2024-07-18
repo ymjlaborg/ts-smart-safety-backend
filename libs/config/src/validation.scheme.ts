@@ -23,4 +23,5 @@ export const validationSchema = joi.object({
   NOTIFICATION_USE_RESEND: joi.boolean().required(),
   NOTIFICATION_RESEND_TIMER: joi.number().required(),
   NOTIFICATION_ACCOUNT_PATH: joi.string().required(),
+  CENTER_ID: joi.string().required(),
 });
