@@ -241,23 +241,41 @@ export class NotificationService implements OnModuleInit {
     targets: Record<string, string | number>[],
     data: Record<string, string>,
   ) {
-    const mobileTokens = targets.map((target) => target.mobileToken);
-    const watchTokens = targets.map((target) => target.watchToken);
+    const mobileTokens = [
+      ...targets.map((target) => target.mobileToken),
+      // 'dnBui7DzRDmNqhceLwXuCj:APA91bHtbC8yMzOY74hTn_yeRQpi_u9T9cfhImNdr1ILbVu5atscJln9mAVVXhchnbKFuefEP8XqbvdCcQ_-JUQ2iYkOTU2xOqgU1mGEGToSRQYTdn3Ee-iQPH4m5TpJ4UKs5vS-dXQy',
+    ];
+    const watchTokens = [
+      ...targets.map((target) => target.watchToken),
+      // 'cf23YTUxSsOaQqzQEP-QJ6:APA91bGmo_nVPmbzj9FTzb9fpQvjpy47_p3h75bxG3vgqOjbRImcw40vN1SRVPUhNaTtAMv4aZr62U3Fqoe4ET6Y2_yRdc2Z4-7CyYL_8wnpJFEivtUAZ7zuDc8UZgF6c8Lh1sCJg9Gn',
+    ];
+
+    console.log(mobileTokens);
 
     const mobileMessages: admin.messaging.MulticastMessage = {
-      notification: {
+      // notification: {
+      //   title: data.alertTitle,
+      //   body: data.alertContent,
+      // },
+      android: {
+        // priority: 'high',
+      },
+      data: {
+        ...data,
         title: data.alertTitle,
         body: data.alertContent,
       },
-      data,
       tokens: mobileTokens as string[],
     };
     const watchMessages: admin.messaging.MulticastMessage = {
       data,
-      notification: {
-        title: data.alertTitle,
-        body: data.alertContent,
+      android: {
+        // priority: 'high',
       },
+      // notification: {
+      // title: data.alertTitle,
+      // body: data.alertContent,
+      // },
       tokens: watchTokens as string[],
     };
 
@@ -267,6 +285,15 @@ export class NotificationService implements OnModuleInit {
     this.logger.log(
       `SEND WATCH >> FAIL COUNT >>  ${watchRes.failureCount} / SUCCESS COUNT >>  ${watchRes.successCount}`,
     );
+    this.logger.log(
+      `SEND MOBILE >> FAIL COUNT >>  ${response.failureCount} / SUCCESS COUNT >>  ${response.successCount}`,
+    );
+
+    response.responses.forEach((res, index) => {
+      if (res.success) {
+        this.logger.error(`MOBILE SUCCESS TARGET ID >> ${targets[index].id}`);
+      }
+    });
 
     return response.responses.map(
       (sendResponse: SendResponse, index: number) => {
