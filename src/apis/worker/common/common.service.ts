@@ -134,7 +134,7 @@ export class CommonService {
 
     // [2024.07.15]
     // 각 값이 소수점 1자리만 나오도록 한다.
-    nodes.forEach((node, index) => {
+    nodes.forEach((node) => {
       const p = new Promise(async (resolve, reject) => {
         try {
           console.log(node);
@@ -154,9 +154,18 @@ export class CommonService {
           }
 
           const r = value.toFixed(1);
+          let key = '';
+
+          // [2024.09.09] 리턴에 대한 이슈
+          for (let i = 0; i < nodeNames.length; i++) {
+            if (node.nodeName.includes(nodeNames[i])) {
+              key = nodeNames[i];
+              break;
+            }
+          }
 
           resolve({
-            [nodeNames[index].toLowerCase()]: r,
+            [key]: r,
           });
         } catch (e) {
           reject();
