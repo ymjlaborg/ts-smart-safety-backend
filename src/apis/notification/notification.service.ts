@@ -243,11 +243,13 @@ export class NotificationService implements OnModuleInit {
   ) {
     const mobileTokens = [
       ...targets.map((target) => target.mobileToken),
-      // 'dnBui7DzRDmNqhceLwXuCj:APA91bHtbC8yMzOY74hTn_yeRQpi_u9T9cfhImNdr1ILbVu5atscJln9mAVVXhchnbKFuefEP8XqbvdCcQ_-JUQ2iYkOTU2xOqgU1mGEGToSRQYTdn3Ee-iQPH4m5TpJ4UKs5vS-dXQy',
+      // 'cIGL0s-0ScOmkK4zCIZ6-d:APA91bEzSzbJ8cXwnimYX5PeXpBAQWNMzXzv3dSOMGoXNd2fC2j-vcOM8nNmcfKZm25CBOexwqt1JP8vRt-YZmn7tGSm28ik2FvSDN_kdkY3R_nutfYYFfG2-Q2xSpVHdz-Anjy1bBm2',
+      // 'cKhyc4HvTUaCqPiY6w95yI:APA91bHQqQQgBo6fM-SbBjtoN3_JRIdTR6TglYxTeVc-3QwPYtwipi55PnGTIka6EkIHQlnRzwq9uPZ4fsuzxvdv21plbR8xxdMFMKTc-M8KqKDM8UaF2Pc_zLje7xHAJUMDHLtlxVef',
     ];
     const watchTokens = [
       ...targets.map((target) => target.watchToken),
-      // 'cf23YTUxSsOaQqzQEP-QJ6:APA91bGmo_nVPmbzj9FTzb9fpQvjpy47_p3h75bxG3vgqOjbRImcw40vN1SRVPUhNaTtAMv4aZr62U3Fqoe4ET6Y2_yRdc2Z4-7CyYL_8wnpJFEivtUAZ7zuDc8UZgF6c8Lh1sCJg9Gn',
+      // 'dX87JEocTXSm7VxcCg9yY5:APA91bF1OI3Ga8HNXJW_rGICaZ_P1Z_vOXUp0N30OnAhcDYMu4MAqfebBsy7c8dNBxQqNtWnfnYeAAxUEZh6xXamwu_BMwZ-dUnChDugrlbL4lHMtZk1p-v_FdxA4wU967shoqlH7VXN',
+      // 'cJPZurT1QPyBRWVoazCGy-:APA91bEx4jiBjs1fudx6oQoZ9_48369pnGefnfae_0LRkqbZc6r-Jsm4AkIpxzTO11Mt6zAmUmEMCuePVgdmIn83HyRTMuNBholXZy65hBgiPyKjHXObq_kSeomkAhRf1wo2FGXFiSx7',
     ];
 
     console.log(mobileTokens);
@@ -258,7 +260,7 @@ export class NotificationService implements OnModuleInit {
       //   body: data.alertContent,
       // },
       android: {
-        // priority: 'high',
+        priority: 'high',
       },
       data: {
         ...data,
@@ -268,13 +270,17 @@ export class NotificationService implements OnModuleInit {
       tokens: mobileTokens as string[],
     };
     const watchMessages: admin.messaging.MulticastMessage = {
-      data,
+      data: {
+        ...data,
+        title: data.alertTitle,
+        body: data.alertContent,
+      },
       android: {
-        // priority: 'high',
+        priority: 'high',
       },
       // notification: {
-      // title: data.alertTitle,
-      // body: data.alertContent,
+      //   title: data.alertTitle,
+      //   body: data.alertContent,
       // },
       tokens: watchTokens as string[],
     };
