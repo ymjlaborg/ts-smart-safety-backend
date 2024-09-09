@@ -159,7 +159,7 @@ export class CommonService {
           // [2024.09.09] 리턴에 대한 이슈
           for (let i = 0; i < nodeNames.length; i++) {
             if (node.nodeName.includes(nodeNames[i])) {
-              key = nodeNames[i];
+              key = nodeNames[i].toLowerCase();
               break;
             }
           }
