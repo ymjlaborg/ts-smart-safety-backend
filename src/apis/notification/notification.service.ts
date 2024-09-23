@@ -243,21 +243,21 @@ export class NotificationService implements OnModuleInit {
   ) {
     const mobileTokens = [
       ...targets.map((target) => target.mobileToken),
-      // wowworker_1
-      'eoZlGLvVSW6I6dPc07KRiA:APA91bH1Nr4IajnDvRCkLZOnVzFZOXzcDruRc3MTOD7EoyESuFJpmFjz97t0YJGDZyvRb1bxJpbZbUWQjSlBF6MBr4hl7IpQNoonWDICWYYntQto-aPG4L_yAlsPjCPyaZ31mBD-7vcT',
-      // wowworker_2
-      'cKhyc4HvTUaCqPiY6w95yI:APA91bHQqQQgBo6fM-SbBjtoN3_JRIdTR6TglYxTeVc-3QwPYtwipi55PnGTIka6EkIHQlnRzwq9uPZ4fsuzxvdv21plbR8xxdMFMKTc-M8KqKDM8UaF2Pc_zLje7xHAJUMDHLtlxVef',
-      // seol
-      'cIGL0s-0ScOmkK4zCIZ6-d:APA91bEzSzbJ8cXwnimYX5PeXpBAQWNMzXzv3dSOMGoXNd2fC2j-vcOM8nNmcfKZm25CBOexwqt1JP8vRt-YZmn7tGSm28ik2FvSDN_kdkY3R_nutfYYFfG2-Q2xSpVHdz-Anjy1bBm2',
+      // // wowworker_1
+      // 'eoZlGLvVSW6I6dPc07KRiA:APA91bH1Nr4IajnDvRCkLZOnVzFZOXzcDruRc3MTOD7EoyESuFJpmFjz97t0YJGDZyvRb1bxJpbZbUWQjSlBF6MBr4hl7IpQNoonWDICWYYntQto-aPG4L_yAlsPjCPyaZ31mBD-7vcT',
+      // // wowworker_2
+      // 'cKhyc4HvTUaCqPiY6w95yI:APA91bHQqQQgBo6fM-SbBjtoN3_JRIdTR6TglYxTeVc-3QwPYtwipi55PnGTIka6EkIHQlnRzwq9uPZ4fsuzxvdv21plbR8xxdMFMKTc-M8KqKDM8UaF2Pc_zLje7xHAJUMDHLtlxVef',
+      // // seol
+      // 'cIGL0s-0ScOmkK4zCIZ6-d:APA91bEzSzbJ8cXwnimYX5PeXpBAQWNMzXzv3dSOMGoXNd2fC2j-vcOM8nNmcfKZm25CBOexwqt1JP8vRt-YZmn7tGSm28ik2FvSDN_kdkY3R_nutfYYFfG2-Q2xSpVHdz-Anjy1bBm2',
     ];
     const watchTokens = [
       ...targets.map((target) => target.watchToken),
-      // wowworker_1
-      'fcp1s6_nR3qb9LdQ-t8rvM:APA91bGUMKX3qrU34bEGCQlGKXY4N1MQF095POZcYeHN9WbHYnb4HIcpBcIpKFFhqrIGZ1zGQsCoDguYRoxl3P7L7oS15GdSiA555yyX8GAcOpwuo8m603IGmo_YDjZRzTrHwHvBAYFD',
-      // wowworker_2
-      'cJPZurT1QPyBRWVoazCGy-:APA91bEx4jiBjs1fudx6oQoZ9_48369pnGefnfae_0LRkqbZc6r-Jsm4AkIpxzTO11Mt6zAmUmEMCuePVgdmIn83HyRTMuNBholXZy65hBgiPyKjHXObq_kSeomkAhRf1wo2FGXFiSx7',
-      // seol
-      'dX87JEocTXSm7VxcCg9yY5:APA91bF1OI3Ga8HNXJW_rGICaZ_P1Z_vOXUp0N30OnAhcDYMu4MAqfebBsy7c8dNBxQqNtWnfnYeAAxUEZh6xXamwu_BMwZ-dUnChDugrlbL4lHMtZk1p-v_FdxA4wU967shoqlH7VXN',
+      // // wowworker_1
+      // 'fcp1s6_nR3qb9LdQ-t8rvM:APA91bGUMKX3qrU34bEGCQlGKXY4N1MQF095POZcYeHN9WbHYnb4HIcpBcIpKFFhqrIGZ1zGQsCoDguYRoxl3P7L7oS15GdSiA555yyX8GAcOpwuo8m603IGmo_YDjZRzTrHwHvBAYFD',
+      // // wowworker_2
+      // 'cJPZurT1QPyBRWVoazCGy-:APA91bEx4jiBjs1fudx6oQoZ9_48369pnGefnfae_0LRkqbZc6r-Jsm4AkIpxzTO11Mt6zAmUmEMCuePVgdmIn83HyRTMuNBholXZy65hBgiPyKjHXObq_kSeomkAhRf1wo2FGXFiSx7',
+      // // seol
+      // 'dX87JEocTXSm7VxcCg9yY5:APA91bF1OI3Ga8HNXJW_rGICaZ_P1Z_vOXUp0N30OnAhcDYMu4MAqfebBsy7c8dNBxQqNtWnfnYeAAxUEZh6xXamwu_BMwZ-dUnChDugrlbL4lHMtZk1p-v_FdxA4wU967shoqlH7VXN',
     ];
 
     console.log(mobileTokens);
